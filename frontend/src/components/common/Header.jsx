@@ -1,13 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { __getPosts } from "../../redux/modules/postsSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getPosts());
+  }, []);
+
+  const globalValue = useSelector((state) => state);
+
   const navigate1 = useNavigate();
   const navigate2 = useNavigate();
   return (
     <HeaderLine onClick={() => navigate1("/")}>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <p>안녕하세요 저는 헤더입니다</p>
       <button
         onClick={() => {

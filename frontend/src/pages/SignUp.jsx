@@ -11,7 +11,7 @@ const SignUp = () => {
           아이디 : <input type="text" placeholder="아이디를 입력해 주세요." />
         </p>
         <p>
-          비밀번호 :{" "}
+          비밀번호 :
           <input type="password" placeholder="비밀번호를 입력해 주세요" />
         </p>
         <button
