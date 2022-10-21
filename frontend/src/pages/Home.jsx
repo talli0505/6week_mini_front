@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -38,6 +39,8 @@ const Home = () => {
 
 const PostBoxWrap = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
 
   margin: 20px auto 0 auto;
