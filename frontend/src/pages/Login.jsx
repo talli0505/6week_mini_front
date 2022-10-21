@@ -8,25 +8,19 @@ const Login = () => {
       <LoginHeader>로그인</LoginHeader>
       <form>
         <p>
-          아이디 : <input type="text" />
+          아이디 :{" "}
+          <input type="text" placeholder="아이디를 입력해 주세요." required />
         </p>
         <p>
-          비밀번호 : <input type="text" />
+          비밀번호 :{" "}
+          <input
+            type="password"
+            placeholder="비밀번호를 입력해 주세요."
+            required
+          />
         </p>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
-          로그인
-        </button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
-          회원이 아니면 회원가입
-        </button>
+        <button type="submit">로그인</button>
+        <button type="submit">회원이 아니면 회원가입</button>
       </form>
     </LoginLayout>
   );
