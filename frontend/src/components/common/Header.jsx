@@ -7,6 +7,7 @@ const Header = () => {
   const navigate2 = useNavigate();
   return (
     <HeaderLine onClick={() => navigate1("/")}>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
       <p>안녕하세요 저는 헤더입니다</p>
       <button
         onClick={() => {
