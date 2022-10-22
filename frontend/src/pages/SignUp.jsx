@@ -4,6 +4,25 @@ import LoginLayout from "../components/common/LoginLayout";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 
 const SignUp = () => {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const nicknameRef = useRef();
+  const confirmRef = useRef();
+
+  const dispatch = useDispatch();
+
+  const onSignUpHandler = () => {
+    const signUpBody = {
+      email: emailRef.current.value,
+      nickname: nicknameRef.current.value,
+      password: passwordRef.current.value,
+      confirm: confirmRef.current.value,
+    };
+    console.log(signUpBody);
+    console.log(JSON.stringify(signUpBody));
+    dispatch(__postSignup(JSON.stringify(signUpBody)));
+  };
+
   return (
     <LoginLayout>
       <img
