@@ -5,18 +5,8 @@ import styled from "styled-components";
 import { __getPosts } from "../../redux/modules/postsSlice";
 
 const Header = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(__getPosts());
-  }, []);
-
-  const globalValue = useSelector((state) => state);
-
-  const navigate1 = useNavigate();
-  const navigate2 = useNavigate();
   return (
-    <HeaderLine onClick={() => navigate1("/")}>
+    <HeaderLine>
       <p>안녕하세요 저는 헤더입니다</p>
       <a
         href="/signup"

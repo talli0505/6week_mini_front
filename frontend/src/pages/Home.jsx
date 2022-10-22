@@ -2,13 +2,36 @@ import React from "react";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { __getPosts } from "../redux/modules/postsSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(__getPosts());
+  }, []);
+
+  const globalPosts = useSelector((state) => state.posts.postsState);
+  console.log("전역변수", globalPosts);
+
   return (
     <Layout>
       <PostBoxWrap>
-        <Link>
+        {globalPosts?.map((item) => {
+          return (
+            <Link>
+              <PostBox>
+                <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
+                <p>{item.nickname}</p>
+                <p>{item.title}</p>
+                <p>{item.content}</p>
+              </PostBox>
+            </Link>
+          );
+        })}
+        {/* <Link>
           <PostBox>
             <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
             <p>안녕하세요</p>
@@ -31,7 +54,7 @@ const Home = () => {
             <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
             <p>안녕하세요</p>
           </PostBox>
-        </Link>
+        </Link> */}
       </PostBoxWrap>
     </Layout>
   );
