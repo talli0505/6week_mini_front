@@ -11,7 +11,7 @@ const LoginLayoutLine = styled.div`
   width: 800px;
   height: 700px;
 
-  border: 2px solid gray;
+  border: 1px solid lightgrey;
   border-radius: 20px;
   margin: 100px auto;
 

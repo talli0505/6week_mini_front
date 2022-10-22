@@ -18,13 +18,14 @@ const Header = () => {
   return (
     <HeaderLine onClick={() => navigate1("/")}>
       <p>안녕하세요 저는 헤더입니다</p>
-      <button
-        onClick={() => {
-          navigate2("/signup");
-        }}
+      <a
+        href="/signup"
+        // onClick={() => {
+        //   navigate2("/signup");
+        // }}
       >
         회원이 아니면 회원가입
-      </button>
+      </a>
     </HeaderLine>
   );
 };
