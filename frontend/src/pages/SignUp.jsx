@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import LoginLayout from "../components/common/LoginLayout";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
+import { useDispatch } from "react-redux";
+import { __postSignup } from "../redux/modules/signUpSlice";
 
 const SignUp = () => {
   const emailRef = useRef();
@@ -19,7 +21,6 @@ const SignUp = () => {
       confirm: confirmRef.current.value,
     };
     console.log(signUpBody);
-    console.log(JSON.stringify(signUpBody));
     dispatch(__postSignup(JSON.stringify(signUpBody)));
   };
 
@@ -29,40 +30,51 @@ const SignUp = () => {
         src="http://mijnheim.com/design/mijnheim/smartskin/ham_ic_join.png"
         className="w-40 h-40"
       />
-      <form className="mt-8 space-y-6 w-80" action="#" method="POST">
-        <input type="hidden" name="remember" defaultValue="true" />
-        <div className="-space-y-px rounded-md shadow-sm">
+      <div className="mt-8 space-y-6 w-80">
+        <div className="-space-y-px rounded-md shadow-sm ">
           <div>
-            <label htmlFor="email-address" className="sr-only">
-              이메일을 입력해 주세요
-            </label>
+            <label className="sr-only">닉네임</label>
             <input
-              id="email-address"
-              name="email"
-              type="email"
-              autoComplete="email"
+              ref={nicknameRef}
+              type="text"
               required
-              className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              className="my-2 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              placeholder="닉네임을 입력해주세요"
+            />
+          </div>
+          <div>
+            <label className="sr-only">이메일을 입력해 주세요</label>
+            <input
+              ref={emailRef}
+              type="email"
+              required
+              className="my-2 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder="이메일을 입력해 주세요"
             />
           </div>
           <div>
-            <label htmlFor="password" className="sr-only">
-              비밀번호를 입력해 주세요
-            </label>
+            <label className="sr-only">비밀번호를 입력해 주세요</label>
             <input
-              id="password"
-              name="password"
+              ref={passwordRef}
               type="password"
-              autoComplete="current-password"
               required
-              className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              className="my-2 relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
               placeholder="비밀번호를 입력해 주세요"
+            />
+          </div>
+          <div>
+            <label className="sr-only">비밀번호 재입력</label>
+            <input
+              ref={confirmRef}
+              type="password"
+              required
+              className="my-2 relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              placeholder="비밀번호 재입력"
             />
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <div className="text-sm">
             <a
               href="/"
@@ -75,6 +87,9 @@ const SignUp = () => {
 
         <div>
           <button
+            onClick={() => {
+              onSignUpHandler();
+            }}
             type="submit"
             className="group relative flex w-full justify-center rounded-md border border-transparent bg-violet-300 py-2 px-4 text-sm font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
@@ -87,41 +102,9 @@ const SignUp = () => {
             회원 가입
           </button>
         </div>
-      </form>
+      </div>
     </LoginLayout>
-    // <LoginLayout>
-    //   <LoginHeader>회원가입</LoginHeader>
-    //   <form>
-    //     <p>
-    //       아이디 : <input type="text" placeholder="아이디를 입력해 주세요." />
-    //     </p>
-    //     <p>
-    //       비밀번호 :
-    //       <input type="password" placeholder="비밀번호를 입력해 주세요" />
-    //     </p>
-    //     <button
-    //       type="submit"
-    //       onClick={(e) => {
-    //         e.preventDefault();
-    //       }}
-    //     >
-    //       뒤로가기 (로그인페이지로)
-    //     </button>
-    //   </form>
-    // </LoginLayout>
   );
 };
-
-const LoginHeader = styled.div`
-  font-size: 40px;
-  font-weight: 600;
-
-  width: 600px;
-  height: 200px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 export default SignUp;
