@@ -1,13 +1,13 @@
 // src/redux/modules/config/configStore.js
 import posts from "../modules/postsSlice";
 import { configureStore } from "@reduxjs/toolkit";
-
+import signUp from "../modules/signUpSlice";
 /**
  * import 해온 것은 slice.reducer 입니다.
  */
 
 const store = configureStore({
-  reducer: { posts: posts },
+  reducer: { posts: posts, signUp: signUp },
   devTools: process.env.NODE_ENV === "development",
 });
 

@@ -1,21 +1,35 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import LoginLayout from "../components/common/LoginLayout";
 
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useNavigate } from "react-router-dom";
-
-// import "../img/cloud.png";
+import { useDispatch } from "react-redux";
+import { __postLogin } from "../redux/modules/LoginSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const onLoginHandler = () => {
+    const loginBody = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+
+    dispatch(__postLogin(JSON.stringify(loginBody)));
+  };
+
   return (
     <LoginLayout>
       <img
         src="https://cdn-icons-png.flaticon.com/512/3596/3596085.png"
         className="w-40 h-40"
       />
-      <form className="mt-8 space-y-6 w-80" action="#" method="POST">
+      <div className="mt-8 space-y-6 w-80" action="#" method="POST">
         <input type="hidden" name="remember" defaultValue="true" />
         <div className="-space-y-px rounded-md shadow-sm">
           <div>
@@ -23,6 +37,7 @@ const Login = () => {
               Email address
             </label>
             <input
+              ref={emailRef}
               id="email-address"
               name="email"
               type="email"
@@ -37,6 +52,7 @@ const Login = () => {
               Password
             </label>
             <input
+              ref={passwordRef}
               id="password"
               name="password"
               type="password"
@@ -49,27 +65,9 @@ const Login = () => {
         </div>
 
         <div className="flex items-center justify-between">
-          {/* <div className="flex items-center"> */}
-          {/* <input
-              id="remember-me"
-              name="remember-me"
-              type="checkbox"
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-            /> */}
-          {/* <label
-              htmlFor="remember-me"
-              className="ml-2 block text-sm text-gray-900"
-            >
-              아직 회원이 아니신가요?
-            </label> */}
-          {/* </div> */}
-
           <div className="text-sm">
             <a
               href="/signup"
-              // onClick={() => {
-              //   navigate("/signup");
-              // }}
               className="font-medium text-violet-300 w-4 hover:text-violet-500"
             >
               아직 회원이 아니신가요?
@@ -80,6 +78,11 @@ const Login = () => {
         <div>
           <button
             type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              onLoginHandler();
+              navigate("/");
+            }}
             className="group relative flex w-full justify-center rounded-md border border-transparent bg-violet-300 py-2 px-4 text-sm font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -91,7 +94,7 @@ const Login = () => {
             로그인
           </button>
         </div>
-      </form>
+      </div>
     </LoginLayout>
   );
 };

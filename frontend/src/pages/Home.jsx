@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { __getPosts } from "../redux/modules/postsSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(__getPosts());
@@ -18,6 +19,7 @@ const Home = () => {
 
   return (
     <Layout>
+      <button onClick={() => navigate("/login")}>로그인하기</button>
       <PostBoxWrap>
         {globalPosts?.map((item) => {
           return (
