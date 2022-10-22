@@ -29,7 +29,7 @@ const Login = () => {
         src="https://cdn-icons-png.flaticon.com/512/3596/3596085.png"
         className="w-40 h-40"
       />
-      <div className="mt-8 space-y-6 w-80" action="#" method="POST">
+      <div className="mt-8 space-y-6 w-80">
         <input type="hidden" name="remember" defaultValue="true" />
         <div className="-space-y-px rounded-md shadow-sm">
           <div>
@@ -38,8 +38,6 @@ const Login = () => {
             </label>
             <input
               ref={emailRef}
-              id="email-address"
-              name="email"
               type="email"
               autoComplete="email"
               required
@@ -53,8 +51,6 @@ const Login = () => {
             </label>
             <input
               ref={passwordRef}
-              id="password"
-              name="password"
               type="password"
               autoComplete="current-password"
               required
@@ -64,7 +60,7 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <div className="text-sm">
             <a
               href="/signup"
@@ -78,8 +74,7 @@ const Login = () => {
         <div>
           <button
             type="submit"
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={() => {
               onLoginHandler();
               navigate("/");
             }}
@@ -98,17 +93,5 @@ const Login = () => {
     </LoginLayout>
   );
 };
-
-const LoginHeader = styled.div`
-  font-size: 40px;
-  font-weight: 600;
-
-  width: 600px;
-  height: 200px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 export default Login;

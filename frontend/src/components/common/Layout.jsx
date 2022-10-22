@@ -15,14 +15,11 @@ const Layout = ({ children }) => {
 export default Layout;
 
 const LayoutLine = styled.div`
-  border: 2px solid gray;
-  border-radius: 20px;
+  /* border: 1px solid lightgray; */
 
-  width: 1200px;
-  height: 1000px;
-
-  margin: 100px auto;
-  padding: 30px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
 
   box-sizing: border-box;
 `;
