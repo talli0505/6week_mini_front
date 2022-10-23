@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
 import { Link } from "react-router-dom";
@@ -73,6 +73,7 @@ const PostBox = styled.div`
   width: 400px;
   height: 200px;
 
+  cursor: pointer;
   border-radius: 10px;
 
   margin: 20px;
