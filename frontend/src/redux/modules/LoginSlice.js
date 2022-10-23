@@ -1,12 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = {
-  data: [],
-};
+const initialState = {};
 
 export const __postLogin = createAsyncThunk(
-  "posts/postPosts",
+  "posts/postLogin",
   async (payload, thunkAPI) => {
     console.log(payload);
     // try {

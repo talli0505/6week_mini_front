@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import LoginLayout from "../components/common/LoginLayout";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
@@ -6,23 +6,53 @@ import { useDispatch } from "react-redux";
 import { __postSignup } from "../redux/modules/signUpSlice";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
   const nicknameRef = useRef();
   const confirmRef = useRef();
 
-  const dispatch = useDispatch();
+  // const [email, setEmail] = useState();
+  // const [nickname, setNickname] = useState();
+  // const [password, setPassword] = useState();
+  // const [confirm, setConfirm] = useState();
 
   const onSignUpHandler = () => {
     const signUpBody = {
       email: emailRef.current.value,
       nickname: nicknameRef.current.value,
       password: passwordRef.current.value,
-      confirm: confirmRef.current.value,
+      confirmPassword: confirmRef.current.value,
     };
-    console.log(signUpBody);
+
     dispatch(__postSignup(JSON.stringify(signUpBody)));
   };
+
+  //   if (isSameUser)
+  //   return res
+  //     .status(400)
+  //     .send({ errorMessage: "이미 가입된 이메일 또는 닉네임 입니다" });
+  // if (nickname.search(must_nickname) === -1)
+  //   return res.status(400).send({
+  //     errorMessage: "닉네임은 `최소 3자 이상, 특수 문자를 포함하면 안됩니다`",
+  //   });
+  // if (password.search(strongPasswordRegex) === -1)
+  //   return res.status(400).send({
+  //     errorMessage:
+  //       "비밀번호는 최소 4글자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9), 특수문자`를 포함해야 합니다",
+  //   });
+  // if (password !== confirmPassword)
+  //   return res
+  //     .status(400)
+  //     .send({ errorMessage: "비밀번호가 일치하지 않습니다" });
+
+  // const createUserData = await this.userService.createAccount(
+  //   email,
+  //   nickname,
+  //   password
+  // );
+  // res.json({ data: createUserData });
+  // };
 
   return (
     <LoginLayout>
@@ -90,7 +120,6 @@ const SignUp = () => {
             onClick={() => {
               onSignUpHandler();
             }}
-            type="submit"
             className="group relative flex w-full justify-center rounded-md border border-transparent bg-violet-300 py-2 px-4 text-sm font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
