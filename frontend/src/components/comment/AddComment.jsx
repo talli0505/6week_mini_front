@@ -6,22 +6,16 @@ import { __addComment } from "../../redux/modules/commentsSlice";
 const AddComment = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  //console.log(id);
 
-  const [comment, setComment] = useState({
-    username: "",
-    content: "",
-  });
+  const [comment, setComment] = useState("");
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    if (comment.username.trim() === "" || comment.comment.trim() === "") {
+    if (comment.comment.trim() === "") {
       return alert("모든 항목을 입력해주세요.");
     }
     dispatch(__addComment());
-    setComment({
-      username: "",
-      content: "",
-    });
     setComment("");
   };
 
@@ -36,7 +30,7 @@ const AddComment = () => {
   return (
     <div>
       <form onSubmit={onSubmitHandler} className="flex flex-row  gap-2">
-        <input
+        {/* <input
           className=" w-80 h-10 border rounded"
           name="username"
           value={comment.username}
@@ -44,7 +38,8 @@ const AddComment = () => {
           placeholder="이름(5자 이내)"
           maxLength={5}
           onChange={onChangeHandler}
-        />
+        /> */}
+        <p> 고은비 </p>
         <input
           className="h-10 border rounded"
           name="content"

@@ -3,10 +3,16 @@ import { useDispatch } from "react-redux";
 import {
   __delComment,
   __editComment,
-  __addComment,
   editMode,
   clearComment,
 } from "../../redux/modules/commentsSlice";
+
+// Is edit = false
+// 수정하기, 삭제하기 버튼
+
+// Is edit = true
+// 취소하기, 저장하기 버튼
+
 const Comment = ({ comment }) => {
   const dispatch = useDispatch();
 
@@ -16,7 +22,8 @@ const Comment = ({ comment }) => {
   //수정버튼을 누르면 isEdit:true,
   const onEditBtn = () => {
     setIsEdit(true);
-    dispatch(editMode(ture));
+    //dispatch()
+    dispatch(editMode(true));
   };
 
   //삭제버튼
@@ -38,26 +45,16 @@ const Comment = ({ comment }) => {
 
   //저장버튼을 누르면 isEdit:false,
   const onSaveBtn = () => {
-    dispatch(__addComment({
-      id: comment.id,
-      content: 
-
-    }));
+    dispatch(__editComment({}));
     setIsEdit(false);
-    dispatch();
+    dispatch(editMode(false));
   };
 
   useEffect(() => {
     setEditCo();
   });
 
-  return (
-    <div>
-     
-    </div>
-  );
+  return <div>{comment}</div>;
 };
 
 export default Comment;
-
-

@@ -15,7 +15,9 @@ export const __getComments = createAsyncThunk(
   "getComments", //전체댓글조회
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get();
+      const { data } = await axios.get(
+        `http://localhost:4000/comments/${payload}`
+      );
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
@@ -23,13 +25,28 @@ export const __getComments = createAsyncThunk(
   }
 );
 
+export const __getComment = createAsyncThunk(
+  "getComment", //댓글수정할때 가져오는 원래 댓글
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.get();
+      return thunkAPI.fulfillWithValue(data);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.code);
+    }
+  }
+);
+
 // {data} 구조분해할당 fulfillwithvalue(data) 데이터값만 보여줌!
 // data , fulfillwithvalue(data.data) data.data 안해주면 config등 쓸데없는거 가져옴
 export const __addComment = createAsyncThunk(
-  "addComment", //댓글추가
+  "addComment", //댓글 달기
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post();
+      const { data } = await axios.post(
+        `http://localhost:4000/comments/${payload}`
+      );
+      //console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
@@ -70,7 +87,6 @@ export const commentsSlice = createSlice({
     },
     editMode: (state, action) => {
       state.isEditMode = action.payload;
-      å;
     },
   },
   extraReducers: {
