@@ -1,54 +1,46 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { __getPosts } from "../../redux/modules/postsSlice";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(__getPosts());
-  }, []);
-
-  const globalValue = useSelector((state) => state);
-
-  const navigate1 = useNavigate();
-  const navigate2 = useNavigate();
+  const navigate = useNavigate();
   return (
-    <HeaderLine onClick={() => navigate1("/")}>
-      <p>안녕하세요 저는 헤더입니다</p>
-      <a
-        href="/signup"
-        // onClick={() => {
-        //   navigate2("/signup");
-        // }}
-      >
-        회원이 아니면 회원가입
-      </a>
+    <HeaderLine>
+      <HeaderBox>
+        <div>logo</div>
+        <div>login</div>
+        <div>signup</div>
+        <button onClick={() => navigate("/login")}>로그인하기</button>
+      </HeaderBox>
+      {/* <div>안녕하세요 저는 헤더입니다</div>
+      <div onClick={() => navigation("/signup")}>회원이 아니면 회원가입</div> */}
     </HeaderLine>
   );
 };
 
-const HeaderLine = styled.div`
+const HeaderLine = styled.header`
   display: flex;
-  justify-content: space-between;
-  border-radius: 20px;
+  justify-content: space-around;
 
-  width: 1100px;
-  height: 170px;
+  width: 100%;
+  height: 70px;
 
   margin: 0 auto;
-  padding: 50px;
-
-  box-sizing: border-box;
 
   font-size: 2rem;
   font-weight: 600;
 
-  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.7);
+  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.3);
 
   cursor: pointer;
 `;
+
+const HeaderBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const HeaderBoxContents = styled.div``;
 
 export default Header;

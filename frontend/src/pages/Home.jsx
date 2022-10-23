@@ -2,40 +2,59 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { __getPosts } from "../redux/modules/postsSlice";
 
 const Home = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const data = useSelector((state) => state.posts.postsData);
-
-  const handleRouteToDetailPage = (id) => {
-    return navigate(`/detail/${id}`);
-  };
 
   useEffect(() => {
     dispatch(__getPosts());
-  }, [dispatch]);
+  }, []);
+
+  const globalPosts = useSelector((state) => state.posts.postsState);
+  console.log("전역변수", globalPosts);
 
   return (
     <Layout>
       <PostBoxWrap>
-        {data?.map((item) => {
+        {globalPosts?.map((item) => {
           return (
-            <PostBox
-              key={item.postId}
-              onClick={() => handleRouteToDetailPage(item.postId)}
-            >
-              {/* img경로 서버에 요청하기 */}
-              <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
-              <p>{item.nickname}</p>
-              <p>{item.content}</p>
-            </PostBox>
+            <Link>
+              <PostBox>
+                <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
+                <p>{item.nickname}</p>
+                <p>{item.title}</p>
+                <p>{item.content}</p>
+              </PostBox>
+            </Link>
           );
         })}
+        {/* <Link>
+          <PostBox>
+            <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
+            <p>안녕하세요</p>
+          </PostBox>
+        </Link>
+        <Link>
+          <PostBox>
+            <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
+            <p>안녕하세요</p>
+          </PostBox>
+        </Link>
+        <Link>
+          <PostBox>
+            <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
+            <p>안녕하세요</p>
+          </PostBox>
+        </Link>
+        <Link>
+          <PostBox>
+            <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
+            <p>안녕하세요</p>
+          </PostBox>
+        </Link> */}
       </PostBoxWrap>
     </Layout>
   );
