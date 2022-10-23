@@ -6,12 +6,11 @@ import { useDispatch } from "react-redux";
 import { __postSignup } from "../redux/modules/signUpSlice";
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
   const nicknameRef = useRef();
   const confirmRef = useRef();
-
-  const dispatch = useDispatch();
 
   const onSignUpHandler = () => {
     const signUpBody = {
@@ -20,7 +19,7 @@ const SignUp = () => {
       password: passwordRef.current.value,
       confirm: confirmRef.current.value,
     };
-    console.log(signUpBody);
+
     dispatch(__postSignup(JSON.stringify(signUpBody)));
   };
 
@@ -90,7 +89,6 @@ const SignUp = () => {
             onClick={() => {
               onSignUpHandler();
             }}
-            type="submit"
             className="group relative flex w-full justify-center rounded-md border border-transparent bg-violet-300 py-2 px-4 text-sm font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
