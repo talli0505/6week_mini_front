@@ -3,9 +3,7 @@ import axios from "axios";
 
 //initialState
 const initialState = {
-  comments: {
-    data: [],
-  },
+  comments: [],
   isLoading: false,
   error: null,
   isEditMode: false,
@@ -40,13 +38,13 @@ export const __getComment = createAsyncThunk(
 // {data} 구조분해할당 fulfillwithvalue(data) 데이터값만 보여줌!
 // data , fulfillwithvalue(data.data) data.data 안해주면 config등 쓸데없는거 가져옴
 export const __addComment = createAsyncThunk(
-  "addComment", //댓글 달기
+  "addComment", //댓글 추가하기
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.post(
         `http://localhost:4000/comments/${payload}`
       );
-      //console.log("data", data);
+      console.log("data", data);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err);

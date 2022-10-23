@@ -4,7 +4,6 @@ import styled from "styled-components";
 const LoginLayout = ({ children }) => {
   return <LoginLayoutLine>{children}</LoginLayoutLine>;
 };
-
 export default LoginLayout;
 
 const LoginLayoutLine = styled.div`

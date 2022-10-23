@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { __addComment } from "../../redux/modules/commentsSlice";
 
@@ -7,24 +7,19 @@ const AddComment = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   //console.log(id);
-
   const [comment, setComment] = useState("");
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    if (comment.comment.trim() === "") {
-      return alert("모든 항목을 입력해주세요.");
+    if (comment.trim() === "") {
+      return alert("입력해주세요.");
     }
-    dispatch(__addComment());
+    dispatch(__addComment(id));
     setComment("");
   };
 
   const onChangeHandler = (e) => {
-    const { name, value } = e.target;
-    setComment({
-      ...comment,
-      [name]: value,
-    });
+    setComment(e.target.value);
   };
 
   return (
@@ -39,11 +34,11 @@ const AddComment = () => {
           maxLength={5}
           onChange={onChangeHandler}
         /> */}
-        <p> 고은비 </p>
+        <p> username을 가져올거야 </p>
         <input
           className="h-10 border rounded"
           name="content"
-          value={comment.content}
+          value={comment}
           type="text"
           placeholder="댓글을 추가하세요. (100자 이내)"
           maxLength={100}

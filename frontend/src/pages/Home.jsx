@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { __getPosts } from "../redux/modules/postsSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(__getPosts());
   }, []);
 
-  const globalPosts = useSelector((state) => state.posts.postsState);
+  const globalPosts = useSelector((state) => state.posts.data);
   console.log("전역변수", globalPosts);
 
   return (
@@ -21,14 +21,21 @@ const Home = () => {
       <PostBoxWrap>
         {globalPosts?.map((item) => {
           return (
-            <Link>
-              <PostBox>
+            //<Link key={item.postId} to="`/detail/${item.postId}`">
+            <div>
+              <PostBox
+                key={item.postId}
+                onClick={() => {
+                  navigate(`/detail/${item.postId}`);
+                  console.log("id", item.postId);
+                }}
+              >
                 <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
                 <p>{item.nickname}</p>
                 <p>{item.title}</p>
                 <p>{item.content}</p>
               </PostBox>
-            </Link>
+            </div>
           );
         })}
         {/* <Link>
