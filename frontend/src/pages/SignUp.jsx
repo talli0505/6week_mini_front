@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import LoginLayout from "../components/common/LoginLayout";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
@@ -12,16 +12,47 @@ const SignUp = () => {
   const nicknameRef = useRef();
   const confirmRef = useRef();
 
+  // const [email, setEmail] = useState();
+  // const [nickname, setNickname] = useState();
+  // const [password, setPassword] = useState();
+  // const [confirm, setConfirm] = useState();
+
   const onSignUpHandler = () => {
     const signUpBody = {
       email: emailRef.current.value,
       nickname: nicknameRef.current.value,
       password: passwordRef.current.value,
-      confirm: confirmRef.current.value,
+      confirmPassword: confirmRef.current.value,
     };
 
     dispatch(__postSignup(JSON.stringify(signUpBody)));
   };
+
+  //   if (isSameUser)
+  //   return res
+  //     .status(400)
+  //     .send({ errorMessage: "이미 가입된 이메일 또는 닉네임 입니다" });
+  // if (nickname.search(must_nickname) === -1)
+  //   return res.status(400).send({
+  //     errorMessage: "닉네임은 `최소 3자 이상, 특수 문자를 포함하면 안됩니다`",
+  //   });
+  // if (password.search(strongPasswordRegex) === -1)
+  //   return res.status(400).send({
+  //     errorMessage:
+  //       "비밀번호는 최소 4글자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9), 특수문자`를 포함해야 합니다",
+  //   });
+  // if (password !== confirmPassword)
+  //   return res
+  //     .status(400)
+  //     .send({ errorMessage: "비밀번호가 일치하지 않습니다" });
+
+  // const createUserData = await this.userService.createAccount(
+  //   email,
+  //   nickname,
+  //   password
+  // );
+  // res.json({ data: createUserData });
+  // };
 
   return (
     <LoginLayout>
