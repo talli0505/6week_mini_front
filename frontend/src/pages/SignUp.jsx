@@ -1,7 +1,5 @@
-import React, { useRef, useState } from "react";
-import styled from "styled-components";
+import React, { useRef } from "react";
 import LoginLayout from "../components/common/LoginLayout";
-import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useDispatch } from "react-redux";
 import { __postSignup } from "../redux/modules/signUpSlice";
 

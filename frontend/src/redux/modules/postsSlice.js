@@ -27,10 +27,12 @@ export const __getPosts = createAsyncThunk(
 export const __postPosts = createAsyncThunk(
   "posts/postPosts",
   async (payload, thunkAPI) => {
+    const token = localStorage.getItem("token");
     try {
       const { data } = await axios.post(url + "/posts", payload, {
         headers: {
           "Content-Type": `application/json`,
+          Authorization: `Bearer ${token}`,
         },
       });
 

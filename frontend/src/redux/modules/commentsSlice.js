@@ -44,7 +44,8 @@ export const __addComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.post(
-        `http://localhost:4000/comments/${payload}`
+        `http://localhost:4000/comments/${payload}`,
+        payload
       );
       //console.log("data", data);
       return thunkAPI.fulfillWithValue(data);

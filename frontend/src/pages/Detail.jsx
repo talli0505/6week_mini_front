@@ -14,9 +14,9 @@ const Detail = () => {
   const { title, content, nickname } = postData;
 
   //console.log("p data: ", postData);
-  useEffect(() => {
-    dispatch(__getPostById(id));
-  }, [dispatch, id]);
+  // useEffect(() => {
+  //   dispatch(__getPostById(id));
+  // }, [dispatch, id]);
 
   return (
     <Layout>
