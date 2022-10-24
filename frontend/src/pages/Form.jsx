@@ -32,7 +32,7 @@ const Form = () => {
             navigate("/");
           }}
         >
-          포스트 확인하러 가자
+          글 등록
         </Button>
       </FormBox>
     </Layout>
