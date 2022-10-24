@@ -8,12 +8,14 @@ import { __getPostById } from "../redux/modules/postsSlice";
 
 const Detail = () => {
   const { id } = useParams();
+  console.log(id);
   const dispatch = useDispatch();
-  const postData = useSelector((state) => state.posts.postData);
-
+  const postData = useSelector((state) => state.posts.data);
+  console.log(postData);
   const { title, content, nickname } = postData;
 
-  //console.log("p data: ", postData);
+  console.log("p data: ", postData);
+
   useEffect(() => {
     dispatch(__getPostById(id));
   }, [dispatch, id]);
@@ -21,9 +23,9 @@ const Detail = () => {
   return (
     <Layout>
       <StPost>
-        <p>{title}</p>
-        <p>{content}</p>
-        <p>{nickname}</p>
+        <div>{title}</div>
+        <div>{content}</div>
+        <div>{nickname}</div>
       </StPost>
 
       <StComment>
