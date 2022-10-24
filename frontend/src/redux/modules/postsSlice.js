@@ -2,7 +2,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  data: [],
+  posts: {
+    data: [],
+  },
+  isLoading: false,
+  error: null,
+  isEditMode: false,
 };
 
 const url = "http://localhost:4000";
@@ -12,7 +17,6 @@ export const __getPosts = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(url + "/posts");
-
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -36,12 +40,6 @@ export const __postPosts = createAsyncThunk(
     }
   }
 );
-
-// export const __post = createAsyncThunk("", async (payload, thunkAPI) => {
-//   try {
-//     const data = await axios.post("");
-//   } catch (error) {}
-// });
 
 export const __deletePosts = createAsyncThunk(
   "posts/deletePosts",
