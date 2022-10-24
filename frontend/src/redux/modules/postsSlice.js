@@ -2,7 +2,17 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  data: [],
+  data: [
+    {
+      content: "123",
+      createdAt: "2022-10-24T07:58:21.562Z",
+      nickname: "123123",
+      postId: 27,
+      title: "123",
+      updatedAt: "2022-10-24T07:58:21.562Z",
+      userId: 20,
+    },
+  ],
   isLoading: false,
   error: null,
 };
@@ -21,21 +31,7 @@ export const __getPosts = createAsyncThunk(
   }
 );
 
-export const __getPostById = createAsyncThunk(
-  "posts/getPostById", //상세페이지 특정 id 게시글 가져오기
-  async (payload, thunkAPI) => {
-    try {
-      const { data } = await axios.get(
-        `http://localhost:4000/posts/${payload}`
-      );
-      //console.log(data.post);
-      return thunkAPI.fulfillWithValue(data.post);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
+//게시글 업로드
 export const __postPosts = createAsyncThunk(
   "posts/postPosts",
   async (payload, thunkAPI) => {
@@ -47,8 +43,25 @@ export const __postPosts = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(data);
-      return thunkAPI.fulfillWithValue(data.data);
+      const { title, content, nickname } = data.data;
+      return thunkAPI.fulfillWithValue({ title, content, nickname });
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getPostById = createAsyncThunk(
+  "posts/getPostById", //상세페이지 특정 id 게시글 가져오기
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:4000/posts/${payload}`
+      );
+      //console.log(data.post);
+      return thunkAPI.fulfillWithValue(data.post);
+
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);
@@ -71,7 +84,9 @@ export const __deletePosts = createAsyncThunk(
           "Content-Type": `application/json`,
         },
       });
-      return thunkAPI.fulfillWithValue(data.data);
+
+      const { title, content, nickname } = data.data;
+      return thunkAPI.fulfillWithValue({ title, content, nickname });
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -97,29 +112,45 @@ export const __patchPosts = createAsyncThunk(
 const postsSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {},
+  reducers: {
+    // "posts/postPosts": {},
+  },
   extraReducers: {
+    // 게시글 Get 액션 페이로드
     [__getPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      //console.log(action.payload);
       state.data = action.payload;
     },
+    // 페이지별 상세 불러오기
     [__getPostById.pending]: (state) => {
       state.isLoading = true;
     },
     [__getPostById.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.data = action.payload;
-      //console.log(state.data);
     },
     [__getPostById.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
       state.data = action.payload;
     },
-    [__postPosts.fulfilled]: (state, action) => {
+    //게시글 Post 액션 페이로드
+    [__postPosts.fulfilled]: (state, { payload }) => {
       state.isLoading = true;
-      state.data = action.payload;
+      console.log(payload.title);
+      // state.data = {
+      //   title: payload.title,
+      //   comment: payload.comment,
+      //   nickname: payload.nickname,
+      // };
+      state.data.title = payload.title;
+      state.data.comment = payload.comment;
+      state.nickname = payload.nickname;
+    },
+    [__postPosts.rejected]: (state, action) => {
+      state.isLoading = true;
+      console.log(action.error);
+      //게시글 삭제 페이로드
     },
     [__deletePosts.fulfilled]: (state, action) => {
       state.isLoading = true;

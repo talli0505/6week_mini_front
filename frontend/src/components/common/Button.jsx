@@ -9,18 +9,17 @@ const Button = ({ children, onClick }) => {
   );
 };
 
-const ButtonBox = styled.button`
+export const ButtonBox = styled.button`
   width: 100px;
   height: 40px;
-  background: #aee3b4;
-  box-sizing: border-box;
-  border-radius: 10px;
+  background: transparent;
+  border-right: 1px solid lightgray;
   text-align: center;
   margin-left: 10px;
   cursor: pointer;
   transition: all 0.3s;
   &:hover {
-    background: #1a6834;
+    background: black;
     color: #fff;
   }
 `;
