@@ -7,15 +7,16 @@ const initialState = {
   error: null,
 };
 
+const url = "http://localhost:4000";
+
 export const __getPosts = createAsyncThunk(
   "posts/getPosts", //메인페이지 전체 게시글 가져오기
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get("http://localhost:4000/posts");
-      console.log(data);
+      const { data } = await axios.get(url + "/posts");
+
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -37,14 +38,16 @@ export const __getPostById = createAsyncThunk(
 );
 
 export const __postPosts = createAsyncThunk(
-  "posts/postPosts",
+  "posts/postPosts", 
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post("http://localhost:4000/posts", payload);
-      //console.log(data);
+      const { data } = await axios.post(url + "/posts", payload, {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      });
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -57,29 +60,36 @@ export const __postPosts = createAsyncThunk(
 // });
 
 export const __deletePosts = createAsyncThunk(
-  "posts/postPosts",
+  "posts/deletePosts",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.delete("http://localhost:4000/posts");
-      console.log(data);
+      const { data } = await axios.delete(url + "/posts", payload, {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      });
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-// export const __delete = createAsyncThunk("", async (payload, thunkAPI) => {
-//   try {
-//     const data = await axios.delete("");
-//   } catch (error) {}
-// });
 
-// export const __patch = createAsyncThunk("", async (payload, thunkAPI) => {
-//   try {
-//     const data = await axios.patch("");
-//   } catch (error) {}
-// });
+export const __patchPosts = createAsyncThunk(
+  "posts/patcgPosts",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.patch(url + "/posts", payload, {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      });
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 const postsSlice = createSlice({
   name: "posts",
@@ -102,6 +112,19 @@ const postsSlice = createSlice({
     [__getPostById.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      state.data = action.payload;
+    },
+    [__postPosts.fulfilled]: (state, action) => {
+      state.isLoading = true;
+      state.data = action.payload;
+    },
+    [__deletePosts.fulfilled]: (state, action) => {
+      state.isLoading = true;
+      state.data = action.payload;
+    },
+    [__patchPosts.fulfilled]: (state, action) => {
+      state.isLoading = true;
+      state.data = action.payload;
     },
   },
 });

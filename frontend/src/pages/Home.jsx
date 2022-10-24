@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { __getPosts } from "../redux/modules/postsSlice";
 
 const Home = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -14,47 +15,29 @@ const Home = () => {
   }, []);
 
   const globalPosts = useSelector((state) => state.posts.data);
-  console.log("전역변수", globalPosts);
+
+  // console.log("전역변수", globalPosts);
+
 
   return (
     <Layout>
       <PostBoxWrap>
         {globalPosts?.map((item) => {
           return (
+
             <Link key={item.postId} to={`/detail/${item.postId}`}>
+
               <PostBox>
-                <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
-                <p>{item.nickname}</p>
-                <p>{item.title}</p>
-                <p>{item.content}</p>
+                <PostBoxImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5h8iOlGEYyJ4cevBCw0IYr0GthW2zLeVWIw&usqp=CAU" />
+                <ContentItem>
+                  <HomeNickName>작성자 : {item.nickname} 님</HomeNickName>
+                  <HomeTitle>{item.title}</HomeTitle>
+                  <HomeContent>{item.content}</HomeContent>
+                </ContentItem>
               </PostBox>
             </Link>
           );
         })}
-        {/* <Link>
-          <PostBox>
-            <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
-            <p>안녕하세요</p>
-          </PostBox>
-        </Link>
-        <Link>
-          <PostBox>
-            <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
-            <p>안녕하세요</p>
-          </PostBox>
-        </Link>
-        <Link>
-          <PostBox>
-            <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
-            <p>안녕하세요</p>
-          </PostBox>
-        </Link>
-        <Link>
-          <PostBox>
-            <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
-            <p>안녕하세요</p>
-          </PostBox>
-        </Link> */}
       </PostBoxWrap>
     </Layout>
   );
@@ -71,7 +54,7 @@ const PostBoxWrap = styled.div`
 
 const PostBox = styled.div`
   width: 400px;
-  height: 200px;
+  height: 600px;
 
   cursor: pointer;
   border-radius: 10px;
@@ -83,11 +66,35 @@ const PostBox = styled.div`
   text-align: center;
   text-decoration: none;
 
-  box-shadow: 10px 5px 10px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.7);
 `;
 
 const PostBoxImg = styled.img`
-  width: 70%;
-  height: 70%;
+  width: 100%;
+  height: 100%;
+
+  border: 1px solid gray;
+  border-radius: 5px;
+`;
+
+const ContentItem = styled.div`
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+`;
+
+const HomeNickName = styled.div`
+  font-size: small;
+`;
+const HomeTitle = styled.div`
+  font-size: 1.5rem;
+`;
+const HomeContent = styled.div`
+  font-size: 1rem;
 `;
 export default Home;
