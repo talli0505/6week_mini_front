@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
 import CommentList from "../components/comment/CommentList";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { __getPostById } from "../redux/modules/postsSlice";
+import { __postPosts } from "../redux/modules/postsSlice";
 
 const Detail = () => {
   const { id } = useParams();
@@ -13,10 +14,10 @@ const Detail = () => {
 
   const { title, content, nickname } = postData;
 
-  //console.log("p data: ", postData);
-  // useEffect(() => {
-  //   dispatch(__getPostById(id));
-  // }, [dispatch, id]);
+  console.log("p data: ", postData);
+  useEffect(() => {
+    dispatch(__getPostById(id));
+  }, [dispatch, id]);
 
   return (
     <Layout>
