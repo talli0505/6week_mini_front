@@ -18,7 +18,8 @@ export const __getComments = createAsyncThunk(
       const { data } = await axios.get(
         `http://localhost:4000/comments/${payload}`
       );
-      return thunkAPI.fulfillWithValue(data);
+      //console.log(data);
+      return thunkAPI.fulfillWithValue(data.message);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
     }
@@ -80,13 +81,13 @@ export const __editComment = createAsyncThunk(
 );
 
 export const __postComment = createAsyncThunk(
-  "postsComment", //댓글 추가
+  "postComment", //댓글 추가
   async (payload, thunkAPI) => {
-    //console.log(payload);
+    console.log(payload.id);
     const token = localStorage.getItem("token");
     try {
       const { data } = await axios.post(
-        url + `/comments/${payload.postId}`,
+        url + `/comments/${payload.id}`,
         JSON.stringify({ comment: payload.comment }),
         {
           headers: {
@@ -96,7 +97,7 @@ export const __postComment = createAsyncThunk(
         }
       );
       //console.log(payload);
-      //console.log(data);
+      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
@@ -123,7 +124,7 @@ export const commentsSlice = createSlice({
     },
     [__getComments.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comments.data = action.payload;
+      state.comments = action.payload;
     },
     [__getComments.rejected]: (state, action) => {
       state.isLoading = false;
@@ -135,8 +136,7 @@ export const commentsSlice = createSlice({
     },
     [__postComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comments = action.payload;
-      //console.log(state.comments);
+      state.comments.push(action.payload);
     },
     [__postComment.rejected]: (state, action) => {
       state.isLoading = false;

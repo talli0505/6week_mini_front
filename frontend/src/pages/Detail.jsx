@@ -15,7 +15,7 @@ const Detail = () => {
   //console.log(postData);
   const { title, content, nickname } = postData;
 
-  console.log("p data: ", postData);
+  //console.log("p data: ", postData);
 
   useEffect(() => {
     dispatch(__getPostById(id));
@@ -41,7 +41,7 @@ export default Detail;
 const StPost = styled.div`
   border: 1px solid gray;
   width: 1100px;
-  height: 500px;
+  height: 300px;
   margin: auto;
 `;
 
@@ -60,6 +60,6 @@ const StPostNickname = styled.div`
 const StComment = styled.div`
   border: 1px solid gray;
   width: 1100px;
-  height: 200px;
+  height: 500px;
   margin: auto;
 `;

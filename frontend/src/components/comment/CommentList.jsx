@@ -1,20 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AddComment from "./AddComment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Comment from "./Comment";
+import { __getComments } from "../../redux/modules/commentsSlice";
+import { useParams } from "react-router-dom";
 
 const CommentList = () => {
-  const data = useSelector((state) => state.comments.comments);
-  const { comment } = data;
-  console.log(comment);
+  const param = useParams();
+
+  const dispatch = useDispatch();
+  const commentData = useSelector((state) => state.comments.comments);
+  //console.log(commentData);
+
+  useEffect(() => {
+    dispatch(__getComments(param.id));
+  }, [dispatch]);
+
   return (
     <div>
       <AddComment />
-      <div>
-        {/* {MOCK_DATA.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
-        ))} */}
-      </div>
+      {commentData?.map((comment) => (
+        <Comment key={comment.commentId} comment={comment} />
+      ))}
     </div>
   );
 };
