@@ -21,21 +21,14 @@ const Home = () => {
       <PostBoxWrap>
         {globalPosts?.map((item) => {
           return (
-            //<Link key={item.postId} to="`/detail/${item.postId}`">
-            <div>
-              <PostBox
-                key={item.postId}
-                onClick={() => {
-                  navigate(`/detail/${item.postId}`);
-                  console.log("id", item.postId);
-                }}
-              >
+            <Link key={item.postId} to={`/detail/${item.postId}`}>
+              <PostBox>
                 <PostBoxImg src="https://cdn.clien.net/web/api/file/F01/12204564/221a6c7811486c.png?w=780&h=30000" />
                 <p>{item.nickname}</p>
                 <p>{item.title}</p>
                 <p>{item.content}</p>
               </PostBox>
-            </div>
+            </Link>
           );
         })}
         {/* <Link>
