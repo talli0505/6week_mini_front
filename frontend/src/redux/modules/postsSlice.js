@@ -52,6 +52,52 @@ export const __postPosts = createAsyncThunk(
   }
 );
 
+//게시글 삭제
+export const __deletePostsById = createAsyncThunk(
+  "posts/deletePosts",
+  async (payload, thunkAPI) => {
+    const token = localStorage.getItem("token");
+    try {
+      const { data } = await axios.post(
+        url + `/posts/${payload.postId}`,
+        payload,
+        {
+          headers: {
+            "Content-Type": `application/json`,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("delete response__ : ", data);
+      // const { title, content, nickname } = data.data;
+      return thunkAPI.fulfillWithValue();
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+//게시글 수정
+export const __patchPostsById = createAsyncThunk(
+  "posts/patcgPosts",
+  async (payload, thunkAPI) => {
+    const token = localStorage.getItem("token");
+    try {
+      const data = await axios.patch(url + `/post/${payload.postId}`, payload, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("patch response__ : ", data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const __getPostById = createAsyncThunk(
   "posts/getPostById", //상세페이지 특정 id 게시글 가져오기
   async (payload, thunkAPI) => {
@@ -69,46 +115,6 @@ export const __getPostById = createAsyncThunk(
   }
 );
 
-// export const __post = createAsyncThunk("", async (payload, thunkAPI) => {
-//   try {
-//     const data = await axios.post("");
-//   } catch (error) {}
-// });
-
-export const __deletePosts = createAsyncThunk(
-  "posts/deletePosts",
-  async (payload, thunkAPI) => {
-    try {
-      const { data } = await axios.delete(url + "/posts", payload, {
-        headers: {
-          "Content-Type": `application/json`,
-        },
-      });
-
-      const { title, content, nickname } = data.data;
-      return thunkAPI.fulfillWithValue({ title, content, nickname });
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
-export const __patchPosts = createAsyncThunk(
-  "posts/patcgPosts",
-  async (payload, thunkAPI) => {
-    try {
-      const data = await axios.patch(url + "/posts", payload, {
-        headers: {
-          "Content-Type": `application/json`,
-        },
-      });
-      return thunkAPI.fulfillWithValue(data.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 const postsSlice = createSlice({
   name: "posts",
   initialState,
@@ -116,12 +122,46 @@ const postsSlice = createSlice({
     // "posts/postPosts": {},
   },
   extraReducers: {
-    // 게시글 Get 액션 페이로드
+    // 전체 게시글 get 액션
     [__getPosts.fulfilled]: (state, action) => {
+      state.isLoading = true;
+      state.data = action.payload;
+    },
+    [__getPosts.rejected]: (state, action) => {
       state.isLoading = false;
       state.data = action.payload;
     },
-    // 페이지별 상세 불러오기
+    //게시글 post 액션
+    [__postPosts.fulfilled]: (state, { payload }) => {
+      state.isLoading = true;
+      console.log("post action payload__ :", payload.title);
+      state.data.title = payload.title;
+      state.data.comment = payload.comment;
+      state.nickname = payload.nickname;
+    },
+    [__postPosts.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+    },
+    //게시글 delete 액션
+    [__deletePostsById.fulfilled]: (state, action) => {
+      state.isLoading = true;
+      state.data = action.payload;
+    },
+    [__deletePostsById.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+    },
+    //게시글 patch 액션
+    [__patchPostsById.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+    },
+    [__patchPostsById.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+    },
+    // id별 상세 불러오기 액션
     [__getPostById.pending]: (state) => {
       state.isLoading = true;
     },
@@ -132,32 +172,6 @@ const postsSlice = createSlice({
     [__getPostById.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
-      state.data = action.payload;
-    },
-    //게시글 Post 액션 페이로드
-    [__postPosts.fulfilled]: (state, { payload }) => {
-      state.isLoading = true;
-      console.log(payload.title);
-      // state.data = {
-      //   title: payload.title,
-      //   comment: payload.comment,
-      //   nickname: payload.nickname,
-      // };
-      state.data.title = payload.title;
-      state.data.comment = payload.comment;
-      state.nickname = payload.nickname;
-    },
-    [__postPosts.rejected]: (state, action) => {
-      state.isLoading = true;
-      console.log(action.error);
-      //게시글 삭제 페이로드
-    },
-    [__deletePosts.fulfilled]: (state, action) => {
-      state.isLoading = true;
-      state.data = action.payload;
-    },
-    [__patchPosts.fulfilled]: (state, action) => {
-      state.isLoading = true;
       state.data = action.payload;
     },
   },
