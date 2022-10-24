@@ -47,7 +47,7 @@ export const __postPosts = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(token);
+      console.log(data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
