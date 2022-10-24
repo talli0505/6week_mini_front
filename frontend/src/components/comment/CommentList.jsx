@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import AddComment from "./AddComment";
 import Comment from "./Comment";
 
@@ -10,9 +9,9 @@ const CommentList = () => {
     <div>
       <AddComment />
       <div>
-        {MOCK_DATA.map((comment) => (
+        {/* {MOCK_DATA.map((comment) => (
           <Comment key={comment.id} comment={comment} />
-        ))}
+        ))} */}
       </div>
     </div>
   );

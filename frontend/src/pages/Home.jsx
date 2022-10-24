@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,20 +8,25 @@ import { __getPosts } from "../redux/modules/postsSlice";
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(__getPosts());
   }, []);
 
   const globalPosts = useSelector((state) => state.posts.data);
+
   // console.log("전역변수", globalPosts);
+
 
   return (
     <Layout>
       <PostBoxWrap>
         {globalPosts?.map((item) => {
           return (
-            <Link key={item.nickname} to="`/detail/${item.postId}`">
+
+            <Link key={item.postId} to={`/detail/${item.postId}`}>
+
               <PostBox>
                 <PostBoxImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5h8iOlGEYyJ4cevBCw0IYr0GthW2zLeVWIw&usqp=CAU" />
                 <ContentItem>

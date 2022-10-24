@@ -2,22 +2,34 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  posts: {
-    data: [],
-  },
+  data: [],
   isLoading: false,
   error: null,
-  isEditMode: false,
 };
 
 const url = "http://localhost:4000";
 
 export const __getPosts = createAsyncThunk(
-  "posts/getPosts",
+  "posts/getPosts", //메인페이지 전체 게시글 가져오기
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(url + "/posts");
       return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const __getPostById = createAsyncThunk(
+  "posts/getPostById", //상세페이지 특정 id 게시글 가져오기
+  async (payload, thunkAPI) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:4000/posts/${payload}`
+      );
+      //console.log(data.post);
+      return thunkAPI.fulfillWithValue(data.post);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -35,13 +47,18 @@ export const __postPosts = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
+
+// export const __post = createAsyncThunk("", async (payload, thunkAPI) => {
+//   try {
+//     const data = await axios.post("");
+//   } catch (error) {}
+// });
 
 export const __deletePosts = createAsyncThunk(
   "posts/deletePosts",
@@ -81,7 +98,21 @@ const postsSlice = createSlice({
   reducers: {},
   extraReducers: {
     [__getPosts.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      //console.log(action.payload);
+      state.data = action.payload;
+    },
+    [__getPostById.pending]: (state) => {
       state.isLoading = true;
+    },
+    [__getPostById.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.data = action.payload;
+      //console.log(state.data);
+    },
+    [__getPostById.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
       state.data = action.payload;
     },
     [__postPosts.fulfilled]: (state, action) => {
