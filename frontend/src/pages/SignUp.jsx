@@ -22,7 +22,6 @@ const SignUp = () => {
       password: passwordRef.current.value,
       confirmPassword: confirmRef.current.value,
     };
-
     dispatch(__postSignup(JSON.stringify(signUpBody)));
   };
 
