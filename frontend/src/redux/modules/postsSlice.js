@@ -31,15 +31,11 @@ export const __postPosts = createAsyncThunk(
       });
 
       return thunkAPI.fulfillWithValue(data.data);
-
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
-
-export default postsSlice.reducer;
 
 // export const __post = createAsyncThunk("", async (payload, thunkAPI) => {
 //   try {
