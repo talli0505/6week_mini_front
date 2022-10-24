@@ -61,7 +61,9 @@ export const __getPostById = createAsyncThunk(
       );
       //console.log(data.post);
       return thunkAPI.fulfillWithValue(data.post);
+
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }

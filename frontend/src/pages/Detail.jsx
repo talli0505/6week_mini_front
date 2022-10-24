@@ -9,10 +9,10 @@ import { __postPosts } from "../redux/modules/postsSlice";
 
 const Detail = () => {
   const { id } = useParams();
-  console.log(id);
+  //console.log(id);
   const dispatch = useDispatch();
   const postData = useSelector((state) => state.posts.data);
-  console.log(postData);
+  //console.log(postData);
   const { title, content, nickname } = postData;
 
   console.log("p data: ", postData);
@@ -24,9 +24,9 @@ const Detail = () => {
   return (
     <Layout>
       <StPost>
-        <div>{title}</div>
-        <div>{content}</div>
-        <div>{nickname}</div>
+        <StPostTitle>{title}</StPostTitle>
+        <StPostContent>{content}</StPostContent>
+        <StPostNickname>{nickname}</StPostNickname>
       </StPost>
 
       <StComment>
@@ -41,13 +41,25 @@ export default Detail;
 const StPost = styled.div`
   border: 1px solid gray;
   width: 1100px;
-  height: 400px;
+  height: 500px;
   margin: auto;
+`;
+
+const StPostTitle = styled.div`
+  font-size: 50px;
+`;
+
+const StPostContent = styled.div`
+  font-size: 20px;
+`;
+
+const StPostNickname = styled.div`
+  font-size: 20px;
 `;
 
 const StComment = styled.div`
   border: 1px solid gray;
   width: 1100px;
-  height: 400px;
+  height: 200px;
   margin: auto;
 `;

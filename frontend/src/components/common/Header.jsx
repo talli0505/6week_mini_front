@@ -24,6 +24,7 @@ const Header = () => {
         <LastButton onClick={() => navigate("/form")}>게시글작성</LastButton>
       </BottonBlock>
     </HeaderBox>
+
   );
 };
 
