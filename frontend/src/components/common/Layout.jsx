@@ -17,5 +17,5 @@ export default Layout;
 const LayoutLine = styled.div`
   padding-top: 110px;
   width: 100%;
-  height: auto;
+  height: 100%;
 `;

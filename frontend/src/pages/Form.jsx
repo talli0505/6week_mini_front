@@ -4,13 +4,17 @@ import { useDispatch } from "react-redux";
 import Layout from "../components/common/Layout";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Button from "../components/common/Button";
+import { ButtonBox } from "../components/common/Button";
+import LoginLayout from "../components/common/LoginLayout";
 
 const Form = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const fileRef = useRef();
   const titleRef = useRef();
   const contentRef = useRef();
+
   const onClickHandler = () => {
     const detailBody = {
       title: titleRef.current.value,
@@ -21,45 +25,35 @@ const Form = () => {
 
   return (
     <Layout>
-      <FormBox>
-        <div>오류명 : </div>
+      <LoginLayout>
+        <input type="file" ref={fileRef} />
+        <Label>오류명</Label>
         <TitleInput type="text" ref={titleRef} />
-        <div>오류 내용 : </div>
-        <ContentsInput type="text" ref={contentRef} />{" "}
-        <Button
+        <Label>오류 내용</Label>
+        <ContentsInput type="texArea" ref={contentRef} />{" "}
+        <FormButton
           onClick={() => {
             onClickHandler();
             navigate("/");
           }}
         >
           글 등록
-        </Button>
-      </FormBox>
+        </FormButton>
+      </LoginLayout>
     </Layout>
 
   );
 };
 
-const FormBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  max-width: 800px;
-  width: 100%;
-  height: 900px;
-
-  margin: 0 auto;
-  padding-top: 100px;
-
-  background-color: aliceblue;
-`;
-
 const ContentsInput = styled.input`
   width: 500px;
-  height: 100px;
+  height: 200px;
 
   border: 1px solid lightgray;
+  border-radius: 10px;
+
+  margin-bottom: 10px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 `;
 
 const TitleInput = styled.input`
@@ -67,5 +61,27 @@ const TitleInput = styled.input`
   height: 50px;
 
   border: 1px solid lightgray;
+  border-radius: 10px;
+
+  margin-bottom: 10px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+`;
+
+const Label = styled.div`
+  width: 500px;
+  text-align: start;
+
+  margin-bottom: 10px;
+
+  font-weight: 600;
+`;
+
+const FormButton = styled(ButtonBox)`
+  border: 1px solid lightgray;
+  border-radius: 5px;
+
+  margin-top: 20px;
+
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 `;
 export default Form;

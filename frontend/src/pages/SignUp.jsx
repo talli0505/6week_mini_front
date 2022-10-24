@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import LoginLayout from "../components/common/LoginLayout";
 import { useDispatch } from "react-redux";
 import { __postSignup } from "../redux/modules/signUpSlice";
+import { LockClosedIcon } from "@heroicons/react/20/solid";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -105,7 +106,7 @@ const SignUp = () => {
           <div className="text-sm">
             <a
               href="/"
-              className="font-medium text-violet-300 w-4hover:text-violet-500"
+              className="font-medium text-gray-300 w-4hover:text-gray-500"
             >
               메인페이지로 돌아가기
             </a>
@@ -117,13 +118,13 @@ const SignUp = () => {
             onClick={() => {
               onSignUpHandler();
             }}
-            className="group relative flex w-full justify-center rounded-md border border-transparent bg-violet-300 py-2 px-4 text-sm font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="group relative flex w-full justify-center rounded-md border border-transparent bg-gray-300 py-2 px-4 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-              {/* <LockClosedIcon
-                className="h-5 w-5 text-violet-500 group-hover:text-violet-400"
+              <LockClosedIcon
+                className="h-5 w-5 text-gray-500 group-hover:text-gray-400"
                 aria-hidden="true"
-              /> */}
+              />
             </span>
             회원 가입
           </button>
