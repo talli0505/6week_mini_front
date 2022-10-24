@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { __getPosts } from "../redux/modules/postsSlice";
 
 const Home = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -18,15 +17,12 @@ const Home = () => {
 
   // console.log("전역변수", globalPosts);
 
-
   return (
     <Layout>
       <PostBoxWrap>
         {globalPosts?.map((item) => {
           return (
-
             <Link key={item.postId} to={`/detail/${item.postId}`}>
-
               <PostBox>
                 <PostBoxImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5h8iOlGEYyJ4cevBCw0IYr0GthW2zLeVWIw&usqp=CAU" />
                 <ContentItem>
