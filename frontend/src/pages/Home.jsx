@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import Layout from "../components/common/Layout";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { __getPosts } from "../redux/modules/postsSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(__getPosts());

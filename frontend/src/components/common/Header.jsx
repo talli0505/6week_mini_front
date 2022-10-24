@@ -17,6 +17,7 @@ const Header = () => {
         <BottonBlock>
           <Button onClick={() => navigate("/signup")}>회원가입</Button>
           <Button onClick={() => navigate("/login")}>로그인하기</Button>
+          <Button onClick={() => navigate("/form")}>게시글작성</Button>
         </BottonBlock>
       </HeaderBox>
     </HeaderLine>

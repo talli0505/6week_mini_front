@@ -1,17 +1,32 @@
-import React from "react";
-import Layout from "../components/common/Layout";
+import React, { useRef } from "react";
+//import Layout from "../components/common/Layout";
+import { __postPosts } from "../redux/modules/postsSlice";
+import { useDispatch } from "react-redux";
 
 const Form = () => {
+  const dispatch = useDispatch();
+  const titleRef = useRef();
+  const contentRef = useRef();
+  const onClickHandler = () => {
+    const detailBody = {
+      title: titleRef.current.value,
+      content: contentRef.current.value,
+    };
+    dispatch(__postPosts(JSON.stringify(detailBody)));
+  };
+
   return (
-    <Layout>
-      <div className="bg-red-600">
-        <form>
-          <input type="text" />
-          <input type="textarea" />
-          <button>제출하기</button>
-        </form>
-      </div>
-    </Layout>
+    <div>
+      <input type="text" ref={titleRef} />
+      <input type="text" ref={contentRef} />{" "}
+      <button
+        onClick={() => {
+          onClickHandler();
+        }}
+      >
+        포스트 확인하러 가자
+      </button>
+    </div>
   );
 };
 
