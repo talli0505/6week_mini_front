@@ -14,7 +14,7 @@ const Home = () => {
 
   const globalPosts = useSelector((state) => state.posts.data);
 
-  // console.log("전역변수", globalPosts);
+  console.log("전역변수", globalPosts);
 
   return (
     <Layout>
@@ -80,7 +80,7 @@ const ContentItem = styled.div`
   margin: 20px;
   display: flex;
   flex-direction: column;
-  text-align: left;
+  justify-content: start;
 `;
 
 const HomeNickName = styled.div`
