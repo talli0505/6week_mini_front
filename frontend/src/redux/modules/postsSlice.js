@@ -35,6 +35,7 @@ export const __getPosts = createAsyncThunk(
 export const __postPosts = createAsyncThunk(
   "posts/postPosts",
   async (payload, thunkAPI) => {
+    console.log("안녕 난 body", payload);
     const token = localStorage.getItem("token");
     try {
       const { data } = await axios.post(url + "/posts", payload, {
@@ -56,20 +57,17 @@ export const __postPosts = createAsyncThunk(
 export const __deletePostsById = createAsyncThunk(
   "posts/deletePosts",
   async (payload, thunkAPI) => {
+    console.log("숫자로 잘 찍힙니다", payload);
     const token = localStorage.getItem("token");
+    console.log(`Authorization: Bearer ${token}`);
     try {
-      const { data } = await axios.post(
-        url + `/posts/${payload.postId}`,
-        payload,
-        {
-          headers: {
-            "Content-Type": `application/json`,
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const { data } = await axios.delete(url + `/posts/${payload}`, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log("delete response__ : ", data);
-      // const { title, content, nickname } = data.data;
       return thunkAPI.fulfillWithValue();
     } catch (error) {
       console.log(error);
@@ -80,21 +78,23 @@ export const __deletePostsById = createAsyncThunk(
 
 //게시글 수정
 export const __patchPostsById = createAsyncThunk(
-  "posts/patcgPosts",
+  "posts/patchPosts",
   async (payload, thunkAPI) => {
-    const token = localStorage.getItem("token");
-    try {
-      const data = await axios.patch(url + `/post/${payload.postId}`, payload, {
-        headers: {
-          "Content-Type": `application/json`,
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log("patch response__ : ", data);
-      return thunkAPI.fulfillWithValue(data.data);
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
+    console.log(payload);
+    // const token = localStorage.getItem("token");
+    // try {
+    //   const data = await axios.patch(url + `/post/${payload}`, payload, {
+    //     headers: {
+    //       "Content-Type": `application/json`,
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   });
+    //   console.log("patch response__ : ", data);
+    //   return thunkAPI.fulfillWithValue(data.data);
+    // } catch (error) {
+    //   console.log(error);
+    //   return thunkAPI.rejectWithValue(error);
+    // }
   }
 );
 
@@ -107,7 +107,6 @@ export const __getPostById = createAsyncThunk(
       );
       //console.log(data.post);
       return thunkAPI.fulfillWithValue(data.post);
-
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);
@@ -134,14 +133,15 @@ const postsSlice = createSlice({
     //게시글 post 액션
     [__postPosts.fulfilled]: (state, { payload }) => {
       state.isLoading = true;
-      console.log("post action payload__ :", payload.title);
-      state.data.title = payload.title;
-      state.data.comment = payload.comment;
-      state.nickname = payload.nickname;
+      state.data.push({
+        title: payload.title,
+        content: payload.content,
+        nickname: payload.nickname,
+      });
     },
     [__postPosts.rejected]: (state, action) => {
       state.isLoading = false;
-      state.data = action.payload;
+      console.log(action.payload);
     },
     //게시글 delete 액션
     [__deletePostsById.fulfilled]: (state, action) => {

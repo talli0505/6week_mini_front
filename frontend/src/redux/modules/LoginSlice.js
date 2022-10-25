@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = {};
+const initialState = {
+  isLogin: false,
+};
 
 export const __postLogin = createAsyncThunk(
   "posts/postLogin",
@@ -25,33 +27,25 @@ export const __postLogin = createAsyncThunk(
 
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
 );
-
-// let token = localStorage.getItem("wtw-token") || "";
-
-// fetch("http://localhost:8000/likes/", {
-//   headers: {
-//     Authorization: token,
-//   },
-// })
-//   .then((response) => response.json())
-//   .then((response) => {
-//     console.log(response.data);
-//   });
 
 const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {},
   extraReducers: {
-    // [__getPosts.fulfilled]: (state, action) => {
-    //   //   state.isLoading = true;
-    //   //   state.postsState = action.payload;
-    // },
+    [__postLogin.fulfilled]: (state, action) => {
+      state.isLogin = true;
+      alert("로그인에 성공했습니다!");
+    },
+    [__postLogin.rejected]: (state, action) => {
+      state.isLoading = true;
+      console.log("로그인 실패시 payload", action.payload);
+      alert(action.payload);
+    },
   },
 });
 
