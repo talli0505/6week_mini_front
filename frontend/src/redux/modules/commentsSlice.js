@@ -1,9 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //initialState
 const initialState = {
-  comments: [],
+  comments: {
+    message: [],
+  },
   isLoading: false,
   error: null,
   isEditMode: false,
@@ -35,7 +37,7 @@ export const __getComments = createAsyncThunk(
 export const __postComment = createAsyncThunk(
   "postComment", //댓글 추가
   async (payload, thunkAPI) => {
-    console.log(payload.id);
+    console.log(payload.comment);
     const token = localStorage.getItem("token");
     try {
       const { data } = await axios.post(
@@ -48,11 +50,11 @@ export const __postComment = createAsyncThunk(
           },
         }
       );
-      console.log(data);
+      console.log(data); //여기서 값이 이상해
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.code);
     }
   }
 );
@@ -62,16 +64,16 @@ export const __delComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     const token = localStorage.getItem("token");
     try {
-      const { data } = await axios.delete(url + `/comments/${payload}`, {
+      await axios.delete(url + `/comments/${payload}`, {
         headers: {
           "Content-Type": `application/json`,
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(data);
-      return thunkAPI.fulfillWithValue(data);
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err.code);
+      console.log(payload);
+      return thunkAPI.fulfillWithValue(payload);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.code);
     }
   }
 );
@@ -87,6 +89,7 @@ export const __editComment = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
@@ -125,8 +128,10 @@ export const commentsSlice = createSlice({
     },
     [__postComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload.createcomment);
-      state.comments.push(action.payload.createcomment);
+      console.log(action.payload); // 여기서 값을 못받아와
+      console.log(current(state));
+      //state.comments.message.push(action.payload.createcomments);
+      console.log(current(state));
     },
     [__postComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -137,9 +142,10 @@ export const commentsSlice = createSlice({
       state.isLoading = true;
     },
     [__delComment.fulfilled]: (state, action) => {
-      state.comments = state.comments.filter((item) => {
+      state.comments.message = state.comments.message.filter((item) => {
+        console.log(current(item));
         console.log(action.payload);
-        return item.id !== action.payload;
+        return item.commentId !== action.payload;
       });
       state.isLoading = false;
     },

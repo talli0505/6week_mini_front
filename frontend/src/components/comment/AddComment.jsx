@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { __postComment } from "../../redux/modules/commentsSlice";
 import { BsPlusSquare } from "react-icons/bs";
+
 const AddComment = () => {
   const dispatch = useDispatch();
   const param = useParams();
