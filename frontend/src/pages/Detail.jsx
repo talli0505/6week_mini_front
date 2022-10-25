@@ -5,7 +5,7 @@ import CommentList from "../components/comment/CommentList";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { __getPostById } from "../redux/modules/postsSlice";
-import LoginLayout from "../components/common/LoginLayout";
+import { __getComments } from "../redux/modules/commentsSlice";
 
 const Detail = () => {
   const { id } = useParams();
@@ -19,6 +19,10 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(__getPostById(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    dispatch(__getComments(id));
   }, [dispatch, id]);
 
   return (

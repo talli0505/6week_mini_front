@@ -1,17 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import AddComment from "./AddComment";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  __delComment,
-  __editComment,
-  __getComments,
-} from "../../redux/modules/commentsSlice";
-import { useParams } from "react-router-dom";
+import { __delComment, __editComment } from "../../redux/modules/commentsSlice";
 import styled from "styled-components";
 import { BsXCircleFill, BsEraserFill } from "react-icons/bs";
 
 const CommentList = () => {
-  const param = useParams();
   const dispatch = useDispatch();
   const commentData = useSelector((state) => state.comments.comments.message);
   //console.log(commentData);
@@ -19,14 +13,9 @@ const CommentList = () => {
   const [mode, setMode] = useState("read");
   const current_content = useRef();
 
-  useEffect(() => {
-    dispatch(__getComments(param.id));
-  }, [dispatch, param.id]);
-
   return (
     <div>
       <AddComment />
-
       {commentData?.map((comment) => (
         <div>
           <StWrap key={comment.commetId}>

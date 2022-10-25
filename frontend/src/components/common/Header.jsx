@@ -5,7 +5,7 @@ import { __getPosts } from "../../redux/modules/postsSlice";
 import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import { ButtonBox } from "./Button";
-// import logo from "../../img/logo.png";
+// import fork from "../../img/logo.png";
 
 const Header = () => {
   const navigate = useNavigate();
