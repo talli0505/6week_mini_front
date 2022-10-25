@@ -57,9 +57,7 @@ export const __postPosts = createAsyncThunk(
 export const __deletePostsById = createAsyncThunk(
   "posts/deletePosts",
   async (payload, thunkAPI) => {
-    console.log("숫자로 잘 찍힙니다", payload);
     const token = localStorage.getItem("token");
-    console.log(`Authorization: Bearer ${token}`);
     try {
       const { data } = await axios.delete(url + `/posts/${payload}`, {
         headers: {
@@ -68,7 +66,7 @@ export const __deletePostsById = createAsyncThunk(
         },
       });
       console.log("delete response__ : ", data);
-      return thunkAPI.fulfillWithValue();
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);
@@ -80,21 +78,27 @@ export const __deletePostsById = createAsyncThunk(
 export const __patchPostsById = createAsyncThunk(
   "posts/patchPosts",
   async (payload, thunkAPI) => {
-    console.log(payload);
-    // const token = localStorage.getItem("token");
-    // try {
-    //   const data = await axios.patch(url + `/post/${payload}`, payload, {
-    //     headers: {
-    //       "Content-Type": `application/json`,
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   });
-    //   console.log("patch response__ : ", data);
-    //   return thunkAPI.fulfillWithValue(data.data);
-    // } catch (error) {
-    //   console.log(error);
-    //   return thunkAPI.rejectWithValue(error);
-    // }
+    const sendData = JSON.stringify({
+      title: payload.title,
+      content: payload.content,
+    });
+    const sendPostId = Number(payload.postId);
+
+    console.log(sendData, sendPostId);
+    const token = localStorage.getItem("token");
+    try {
+      const data = await axios.patch(url + `/posts/${sendPostId}`, sendData, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log("patch response__ : ", data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
+    }
   }
 );
 
@@ -146,11 +150,9 @@ const postsSlice = createSlice({
     //게시글 delete 액션
     [__deletePostsById.fulfilled]: (state, action) => {
       state.isLoading = true;
-      state.data = action.payload;
     },
     [__deletePostsById.rejected]: (state, action) => {
       state.isLoading = false;
-      state.data = action.payload;
     },
     //게시글 patch 액션
     [__patchPostsById.fulfilled]: (state, action) => {

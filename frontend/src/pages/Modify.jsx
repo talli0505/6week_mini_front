@@ -27,7 +27,6 @@ const Modify = () => {
     dispatch(__patchPostsById({ ...patchContentBody, postId: postId }));
     // navigate("/");
   };
-
   return (
     <Layout>
       <LoginLayout>

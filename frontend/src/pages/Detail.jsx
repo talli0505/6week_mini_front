@@ -18,13 +18,11 @@ const Detail = () => {
   const dispatch = useDispatch();
   const postData = useSelector((state) => state.posts.data);
 
-  console.log("p data: ", postData);
-
   // 게시글 삭제 핸들러
 
   const dispatchDeletePost = (postId) => {
     dispatch(__deletePostsById(postId));
-    navigate("/");
+    // navigate("/");
   };
 
   //게시글 수정 페이지 이동
