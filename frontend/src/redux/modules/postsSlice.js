@@ -83,10 +83,7 @@ export const __putPostsById = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log("patch response__ : ", data);
-      // return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      // console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -113,7 +110,7 @@ const postsSlice = createSlice({
   extraReducers: {
     // 전체 게시글 get 액션
     [__getPosts.fulfilled]: (state, action) => {
-      state.data.push(action.payload);
+      state.data = action.payload;
     },
     [__getPosts.rejected]: (state, action) => {
       alert(action.payload);
