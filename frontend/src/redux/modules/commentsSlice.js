@@ -11,13 +11,20 @@ const initialState = {
 
 const url = "http://localhost:4000";
 
+// {data} 구조분해할당 fulfillwithvalue(data) 데이터값만 보여줌!
+// data , fulfillwithvalue(data.data) data.data 안해주면 config등 쓸데없는거 가져옴
 export const __getComments = createAsyncThunk(
   "getComments", //전체댓글조회
   async (payload, thunkAPI) => {
+    const token = localStorage.getItem("token");
     try {
-      const { data } = await axios.get(
-        `http://localhost:4000/comments/${payload}`
-      );
+      const { data } = await axios.get(url + `/comments/${payload}`, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
@@ -25,42 +32,44 @@ export const __getComments = createAsyncThunk(
   }
 );
 
-export const __getComment = createAsyncThunk(
-  "getComment", //댓글수정할때 가져오는 원래 댓글
+export const __postComment = createAsyncThunk(
+  "postComment", //댓글 추가
   async (payload, thunkAPI) => {
+    console.log(payload.id);
+    const token = localStorage.getItem("token");
     try {
-      const { data } = await axios.get();
+      const { data } = await axios.post(
+        url + `/comments/${payload.id}`,
+        JSON.stringify({ comment: payload.comment }),
+        {
+          headers: {
+            "Content-Type": `application/json`,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(data);
       return thunkAPI.fulfillWithValue(data);
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.code);
+    } catch (error) {
+      console.log(error);
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
 
-// {data} 구조분해할당 fulfillwithvalue(data) 데이터값만 보여줌!
-// data , fulfillwithvalue(data.data) data.data 안해주면 config등 쓸데없는거 가져옴
-// export const __addComment = createAsyncThunk(
-//   "addComment", //댓글 추가하기
-//   async (payload, thunkAPI) => {
-//     try {
-//       const { data } = await axios.post(
-//         `http://localhost:4000/comments/${payload}`,
-//         payload
-//       );
-//       console.log("data", data);
-//       return thunkAPI.fulfillWithValue(data);
-//     } catch (err) {
-//       return thunkAPI.rejectWithValue(err);
-//     }
-//   }
-// );
-
 export const __delComment = createAsyncThunk(
   "delComment", //댓글삭제
   async (payload, thunkAPI) => {
+    const token = localStorage.getItem("token");
     try {
-      await axios.delete();
-      return thunkAPI.fulfillWithValue(payload);
+      const { data } = await axios.delete(url + `/comments/${payload}`, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(data);
+      return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
     }
@@ -70,37 +79,17 @@ export const __delComment = createAsyncThunk(
 export const __editComment = createAsyncThunk(
   "editComment", //댓글수정
   async (payload, thunkAPI) => {
+    const token = localStorage.getItem("token");
     try {
-      const { data } = await axios.patch();
+      const { data } = await axios.patch(url + `/comments/${payload}`, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
-    }
-  }
-);
-
-export const __postComment = createAsyncThunk(
-  "postsComment", //댓글 추가
-  async (payload, thunkAPI) => {
-    //console.log(payload);
-    const token = localStorage.getItem("token");
-    try {
-      const { data } = await axios.post(
-        url + `/comments/${payload.postId}`,
-        JSON.stringify({ comment: payload.comment }),
-        {
-          headers: {
-            "Content-Type": `application/json`,
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      //console.log(payload);
-      //console.log(data);
-      return thunkAPI.fulfillWithValue(data);
-    } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -123,7 +112,8 @@ export const commentsSlice = createSlice({
     },
     [__getComments.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comments.data = action.payload;
+      state.comments = action.payload;
+      console.log(action.payload);
     },
     [__getComments.rejected]: (state, action) => {
       state.isLoading = false;
@@ -135,8 +125,8 @@ export const commentsSlice = createSlice({
     },
     [__postComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comments = action.payload;
-      //console.log(state.comments);
+      console.log(action.payload.createcomment);
+      state.comments.push(action.payload.createcomment);
     },
     [__postComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -147,7 +137,8 @@ export const commentsSlice = createSlice({
       state.isLoading = true;
     },
     [__delComment.fulfilled]: (state, action) => {
-      state.comments.data = state.comments.data.filter((item) => {
+      state.comments = state.comments.filter((item) => {
+        console.log(action.payload);
         return item.id !== action.payload;
       });
       state.isLoading = false;

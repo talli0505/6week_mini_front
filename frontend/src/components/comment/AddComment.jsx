@@ -1,41 +1,32 @@
-import React, { useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
 import { __postComment } from "../../redux/modules/commentsSlice";
-
+import { BsPlusSquare } from "react-icons/bs";
 const AddComment = () => {
   const dispatch = useDispatch();
   const param = useParams();
-  console.log(param.id);
+  //console.log(param.id);
 
   const commentRef = useRef();
 
-  const Handler = () => {
-    // e.preventDefault();
-    // if (commentRef.trim() === "") {
-    //   return alert("입력해주세요.");
-    // }
-    dispatch(
-      __postComment({ comment: commentRef.current.value, postId: param.id })
-    );
-
-    //console.log(JSON.stringify(commentBody));
+  const Handler = (e) => {
+    e.preventDefault();
+    if (commentRef.current.value === "") {
+      return alert("댓글을 입력해주세요!");
+    } else {
+      dispatch(
+        __postComment({ comment: commentRef.current.value, id: param.id })
+      );
+    }
+    commentRef.current.value = "";
   };
 
   return (
-    <div>
-      {/* <form onSubmit={onSubmitHandler} className="flex flex-row  gap-2">
-        <input
-          className=" w-80 h-10 border rounded"
-          name="username"
-          value={comment.username}
-          type="text"
-          placeholder="이름(5자 이내)"
-          maxLength={5}
-          onChange={onChangeHandler}
-        /> */}
-      <p> username을 가져올거야 </p>
-      <input
+    <StWrap>
+      <StNick> username </StNick>
+      <StInput
         className="h-10 border rounded"
         name="content"
         ref={commentRef}
@@ -43,12 +34,33 @@ const AddComment = () => {
         placeholder="댓글을 추가하세요. (100자 이내)"
         maxLength={100}
       />
-      <button className="border rounded" onClick={Handler}>
-        추가하기
-      </button>
-      {/* </form> */}
-    </div>
+
+      <StBtn>
+        <BsPlusSquare size="30" onClick={Handler} />
+      </StBtn>
+    </StWrap>
   );
 };
 
+const StWrap = styled.div`
+  display: flex;
+  height: 80px;
+  margin-top: 10px;
+`;
+const StNick = styled.div`
+  border: none;
+  width: 100px;
+  height: 70px;
+  text-align: center;
+  line-height: 70px;
+  border-radius: 20px;
+`;
+const StInput = styled.input`
+  width: 800px;
+  height: 70px;
+  border-radius: 20px;
+`;
+const StBtn = styled.div`
+  margin: 15px 0 0 23px;
+`;
 export default AddComment;
