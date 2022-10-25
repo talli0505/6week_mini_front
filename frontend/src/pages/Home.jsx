@@ -6,11 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { __getPosts } from "../redux/modules/postsSlice";
 
 const Home = () => {
-  const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(__getPosts());
   }, []);
+  const dispatch = useDispatch();
 
   const globalPosts = useSelector((state) => state.posts.data);
 

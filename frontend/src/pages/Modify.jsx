@@ -4,7 +4,7 @@ import Layout from "../components/common/Layout";
 import LoginLayout from "../components/common/LoginLayout";
 import styled from "styled-components";
 import { ButtonBox } from "../components/common/Button";
-import { __patchPostsById } from "../redux/modules/postsSlice";
+import { __putPostsById } from "../redux/modules/postsSlice";
 import { useDispatch } from "react-redux";
 
 const Modify = () => {
@@ -24,7 +24,7 @@ const Modify = () => {
       title: titleRef.current.value,
       content: contentRef.current.value,
     };
-    dispatch(__patchPostsById({ ...patchContentBody, postId: postId }));
+    dispatch(__putPostsById({ ...patchContentBody, postId: postId }));
     // navigate("/");
   };
   return (

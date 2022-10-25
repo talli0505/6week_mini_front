@@ -4,8 +4,10 @@ import { useDispatch } from "react-redux";
 import { __postSignup } from "../redux/modules/signUpSlice";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import Layout from "../components/common/Layout";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -13,47 +15,43 @@ const SignUp = () => {
   const confirmRef = useRef();
 
   const onSignUpHandler = () => {
-    const signUpBody = {
-      email: emailRef.current.value,
-      nickname: nicknameRef.current.value,
-      password: passwordRef.current.value,
-      confirmPassword: confirmRef.current.value,
-    };
-    dispatch(__postSignup(JSON.stringify(signUpBody)));
+    const check = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
+
+    const checkPwd =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{4,}$/;
+
+    if (emailRef.current.value == "") {
+      alert("이메일을 입력해 주세요");
+    } else if (nicknameRef.current.value == "") {
+      alert("닉네임을 입력해 주세요");
+    } else if (passwordRef.current.value == "") {
+      alert("비밀번호를 입력해 주세요");
+    } else if (confirmRef.current.value == "") {
+      alert("비밀번호를 한번 더 입력해 주세요");
+    } else if (
+      nicknameRef.current.value.length < 3 ||
+      check.test(nicknameRef.current.value)
+    ) {
+      alert("닉네임은 영여로, `최소 3자 이상, 특수 문자를 포함하면 안됩니다`");
+    } else if (!checkPwd.test(passwordRef.current.value)) {
+      alert(
+        "비밀번호는 최소 4글자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9), 특수문자를 포함해야 합니다"
+      );
+    } else if (passwordRef.current.value !== confirmRef.current.value) {
+      alert("비밀번호가 일치하지 않습니다.");
+    } else {
+      const signUpBody = {
+        email: emailRef.current.value,
+        nickname: nicknameRef.current.value,
+        password: passwordRef.current.value,
+        confirmPassword: confirmRef.current.value,
+      };
+      dispatch(__postSignup(JSON.stringify(signUpBody)));
+    }
   };
-
-  if (valid) {
-  } else {
-  }
-  //   if (isSameUser)
-  //   return res
-  //     .status(400)
-  //     .send({ errorMessage: "이미 가입된 이메일 또는 닉네임 입니다" });
-  // if (nickname.search(must_nickname) === -1)
-  //   return res.status(400).send({
-  //     errorMessage: "닉네임은 `최소 3자 이상, 특수 문자를 포함하면 안됩니다`",
-  //   });
-  // if (password.search(strongPasswordRegex) === -1)
-  //   return res.status(400).send({
-  //     errorMessage:
-  //       "비밀번호는 최소 4글자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9), 특수문자`를 포함해야 합니다",
-  //   });
-  // if (password !== confirmPassword)
-  //   return res
-  //     .status(400)
-  //     .send({ errorMessage: "비밀번호가 일치하지 않습니다" });
-
-  // const createUserData = await this.userService.createAccount(
-  //   email,
-  //   nickname,
-  //   password
-  // );
-  // res.json({ data: createUserData });
-  // };
 
   return (
     <Layout>
-      {" "}
       <LoginLayout>
         <img
           src="http://mijnheim.com/design/mijnheim/smartskin/ham_ic_join.png"
@@ -118,6 +116,7 @@ const SignUp = () => {
             <button
               onClick={() => {
                 onSignUpHandler();
+                navigate("/");
               }}
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-gray-300 py-2 px-4 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >

@@ -2,17 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  data: [
-    {
-      content: "123",
-      createdAt: "2022-10-24T07:58:21.562Z",
-      nickname: "123123",
-      postId: 27,
-      title: "123",
-      updatedAt: "2022-10-24T07:58:21.562Z",
-      userId: 20,
-    },
-  ],
+  data: [],
   isLoading: false,
   error: null,
 };
@@ -75,8 +65,8 @@ export const __deletePostsById = createAsyncThunk(
 );
 
 //게시글 수정
-export const __patchPostsById = createAsyncThunk(
-  "posts/patchPosts",
+export const __putPostsById = createAsyncThunk(
+  "posts/putPosts",
   async (payload, thunkAPI) => {
     const sendData = JSON.stringify({
       title: payload.title,
@@ -87,16 +77,16 @@ export const __patchPostsById = createAsyncThunk(
     console.log(sendData, sendPostId);
     const token = localStorage.getItem("token");
     try {
-      const data = await axios.patch(url + `/posts/${sendPostId}`, sendData, {
+      const data = await axios.put(url + `/posts/${sendPostId}`, sendData, {
         headers: {
           "Content-Type": `application/json`,
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("patch response__ : ", data);
-      return thunkAPI.fulfillWithValue(data.data);
+      // console.log("patch response__ : ", data);
+      // return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -109,10 +99,8 @@ export const __getPostById = createAsyncThunk(
       const { data } = await axios.get(
         `http://localhost:4000/posts/${payload}`
       );
-      //console.log(data.post);
       return thunkAPI.fulfillWithValue(data.post);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -121,22 +109,17 @@ export const __getPostById = createAsyncThunk(
 const postsSlice = createSlice({
   name: "posts",
   initialState,
-  reducers: {
-    // "posts/postPosts": {},
-  },
+  reducers: {},
   extraReducers: {
     // 전체 게시글 get 액션
     [__getPosts.fulfilled]: (state, action) => {
-      state.isLoading = true;
-      state.data = action.payload;
+      state.data.push(action.payload);
     },
     [__getPosts.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.data = action.payload;
+      alert(action.payload);
     },
     //게시글 post 액션
     [__postPosts.fulfilled]: (state, { payload }) => {
-      state.isLoading = true;
       state.data.push({
         title: payload.title,
         content: payload.content,
@@ -144,37 +127,26 @@ const postsSlice = createSlice({
       });
     },
     [__postPosts.rejected]: (state, action) => {
-      state.isLoading = false;
-      console.log(action.payload);
+      alert(action.payload);
     },
     //게시글 delete 액션
-    [__deletePostsById.fulfilled]: (state, action) => {
-      state.isLoading = true;
-    },
+    [__deletePostsById.fulfilled]: (state, action) => {},
     [__deletePostsById.rejected]: (state, action) => {
-      state.isLoading = false;
+      alert(action.payload);
     },
     //게시글 patch 액션
-    [__patchPostsById.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.data = action.payload;
+    [__putPostsById.fulfilled]: (state, action) => {
+      alert("성공");
     },
-    [__patchPostsById.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.data = action.payload;
+    [__putPostsById.rejected]: (state, action) => {
+      alert(action.payload);
     },
     // id별 상세 불러오기 액션
-    [__getPostById.pending]: (state) => {
-      state.isLoading = true;
-    },
     [__getPostById.fulfilled]: (state, action) => {
-      state.isLoading = false;
       state.data = action.payload;
     },
     [__getPostById.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.error = action.payload;
-      state.data = action.payload;
+      alert(action.payload);
     },
   },
 });
