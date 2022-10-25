@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
-import { __getPosts } from "../../redux/modules/postsSlice";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "./Button";
 import { ButtonBox } from "./Button";
+import Button from "./Button";
+import styled from "styled-components";
 // import fork from "../../img/logo.png";
 
 const Header = () => {
