@@ -12,11 +12,6 @@ const SignUp = () => {
   const nicknameRef = useRef();
   const confirmRef = useRef();
 
-  // const [email, setEmail] = useState();
-  // const [nickname, setNickname] = useState();
-  // const [password, setPassword] = useState();
-  // const [confirm, setConfirm] = useState();
-
   const onSignUpHandler = () => {
     const signUpBody = {
       email: emailRef.current.value,
@@ -27,6 +22,9 @@ const SignUp = () => {
     dispatch(__postSignup(JSON.stringify(signUpBody)));
   };
 
+  if (valid) {
+  } else {
+  }
   //   if (isSameUser)
   //   return res
   //     .status(400)

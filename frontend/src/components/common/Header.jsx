@@ -15,8 +15,7 @@ const Header = () => {
   let loginContents = null;
 
   // if (globalLogin)
-  //   loginContents =
-  //   (
+  //   loginContents = (
   //     <BottonBlock>
   //       <div>"누구누구님 환영합니다" </div>
   //     </BottonBlock>
