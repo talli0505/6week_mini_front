@@ -1,15 +1,13 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import { __postComment } from "../../redux/modules/commentsSlice";
 import { BsPlusSquare } from "react-icons/bs";
+import styled from "styled-components";
 
 const AddComment = () => {
   const dispatch = useDispatch();
   const param = useParams();
-  //console.log(param.id);
-
   const commentRef = useRef();
 
   const Handler = (e) => {
