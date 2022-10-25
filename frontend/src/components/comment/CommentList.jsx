@@ -1,15 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import AddComment from "./AddComment";
 import { useDispatch, useSelector } from "react-redux";
-import { __delComment, __getComments } from "../../redux/modules/commentsSlice";
+import {
+  __delComment,
+  __editComment,
+  __getComments,
+} from "../../redux/modules/commentsSlice";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { BsXCircleFill, BsEraserFill } from "react-icons/bs";
 
 const CommentList = () => {
   const param = useParams();
   const dispatch = useDispatch();
   const commentData = useSelector((state) => state.comments.comments.message);
-  console.log(commentData);
+  //console.log(commentData);
+
+  const [mode, setMode] = useState("read");
+  const current_content = useRef();
 
   useEffect(() => {
     dispatch(__getComments(param.id));
@@ -18,19 +26,33 @@ const CommentList = () => {
   return (
     <div>
       <AddComment />
+
       {commentData?.map((comment) => (
-        <StWrap key={comment.commetId}>
-          <StNick>{comment.commentId} </StNick>
-          <StComment>{comment.comment} </StComment>
-          <StBtn
-            onClick={() => {
-              dispatch(__delComment(comment.commentId));
-              console.log(comment.commentId);
-            }}
-          >
-            삭제
-          </StBtn>
-        </StWrap>
+        <div>
+          <StWrap key={comment.commetId}>
+            <StNick>{comment.commentId} </StNick>
+            <StComment>{comment.comment} </StComment>
+
+            <StEditBtn>
+              <BsEraserFill
+                size="25"
+                onClick={() => {
+                  dispatch(__editComment(comment.commentId));
+                  console.log(comment.commentId);
+                }}
+              />
+            </StEditBtn>
+            <StDelBtn>
+              <BsXCircleFill
+                size="22"
+                onClick={() => {
+                  dispatch(__delComment(comment.commentId));
+                  console.log(comment.commentId);
+                }}
+              />
+            </StDelBtn>
+          </StWrap>
+        </div>
       ))}
     </div>
   );
@@ -57,10 +79,12 @@ const StComment = styled.div`
   line-height: 70px;
   //border: 1px solid gray;
 `;
-const StBtn = styled.button`
-  width: 100px;
-  height: 70px;
-  border-radius: 20px;
-  border: 1px solid gray;
+const StEditBtn = styled.div`
+  display: flex;
+  margin: 9px 5px 0 0;
+`;
+const StDelBtn = styled.div`
+  display: flex;
+  margin: 12px 20px 0 10px;
 `;
 export default CommentList;

@@ -31,9 +31,9 @@ const Detail = () => {
         <StPostContent>{content}</StPostContent>
       </StPost>
 
-      <StPost>
+      <StComment>
         <CommentList />
-      </StPost>
+      </StComment>
     </Layout>
   );
 };
@@ -66,10 +66,16 @@ const StPostNickname = styled.div`
 `;
 
 const StComment = styled.div`
-  border: 1px solid gray;
-  width: 1100px;
+  max-width: 1000px;
+  width: 100%;
   height: 500px;
-  margin: auto;
+
+  margin: 70px auto 0 auto;
+
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 30px;
+  border: 1px solid lightgray;
+  overflow: scroll;
 `;
 
 const StWrap = styled.div`

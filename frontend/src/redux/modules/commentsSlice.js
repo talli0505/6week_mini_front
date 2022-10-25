@@ -49,7 +49,7 @@ export const __postComment = createAsyncThunk(
         }
       );
       console.log(data);
-      return thunkAPI.fulfillWithValue(data.createcomment);
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);
@@ -79,26 +79,20 @@ export const __delComment = createAsyncThunk(
 export const __editComment = createAsyncThunk(
   "editComment", //댓글수정
   async (payload, thunkAPI) => {
+    const token = localStorage.getItem("token");
     try {
-      const { data } = await axios.patch();
+      const { data } = await axios.patch(url + `/comments/${payload}`, {
+        headers: {
+          "Content-Type": `application/json`,
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
     }
   }
 );
-
-// export const __getComment = createAsyncThunk(
-//   "getComment", //댓글수정할때 가져오는 원래 댓글
-//   async (payload, thunkAPI) => {
-//     try {
-//       const { data } = await axios.get();
-//       return thunkAPI.fulfillWithValue(data);
-//     } catch (e) {
-//       return thunkAPI.rejectWithValue(e.code);
-//     }
-//   }
-// );
 
 export const commentsSlice = createSlice({
   name: "comments",
@@ -131,8 +125,8 @@ export const commentsSlice = createSlice({
     },
     [__postComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.comments.push(action.payload);
-      //console.log(action.payload);
+      console.log(action.payload.createcomment);
+      state.comments.push(action.payload.createcomment);
     },
     [__postComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -144,6 +138,7 @@ export const commentsSlice = createSlice({
     },
     [__delComment.fulfilled]: (state, action) => {
       state.comments = state.comments.filter((item) => {
+        console.log(action.payload);
         return item.id !== action.payload;
       });
       state.isLoading = false;

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { __postComment } from "../../redux/modules/commentsSlice";
-
+import { BsPlusSquare } from "react-icons/bs";
 const AddComment = () => {
   const dispatch = useDispatch();
   const param = useParams();
@@ -34,8 +34,9 @@ const AddComment = () => {
         placeholder="댓글을 추가하세요. (100자 이내)"
         maxLength={100}
       />
-      <StBtn className="border rounded" onClick={Handler}>
-        추가하기
+
+      <StBtn>
+        <BsPlusSquare size="30" onClick={Handler} />
       </StBtn>
     </StWrap>
   );
@@ -59,9 +60,7 @@ const StInput = styled.input`
   height: 70px;
   border-radius: 20px;
 `;
-const StBtn = styled.button`
-  width: 100px;
-  height: 70px;
-  border-radius: 20px;
+const StBtn = styled.div`
+  margin: 15px 0 0 23px;
 `;
 export default AddComment;
