@@ -53,14 +53,22 @@ const Detail = () => {
   return (
     <Layout>
       <PostBdx>
-        <StPostNickname>작성자 : {postData?.nickname}</StPostNickname>
-        <StPostTitle>{postData?.title}</StPostTitle>
-        <StPostContent>{postData?.content}</StPostContent>
-
-        <ButtonLay>
-          <Button onClick={() => dispatchDeletePost(id)}>게시글 삭제</Button>
-          <Button onClick={() => navigateModify(id)}>게시글 수정</Button>
-        </ButtonLay>
+        <ContentsBox>
+          <Content>
+            <StPostNickname>작성자 : {postData?.nickname}</StPostNickname>
+            <StPostTitle>{postData?.title}</StPostTitle>
+            <StPostContent>{postData?.content}</StPostContent>
+          </Content>
+          <Content>
+            <DetailImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnPj4jA8TYFk8aEbMCexpuvls4PYXcYyqNyQ&usqp=CAU" />
+            <ButtonLay>
+              <Button onClick={() => dispatchDeletePost(id)}>
+                게시글 삭제
+              </Button>
+              <Button onClick={() => navigateModify(id)}>게시글 수정</Button>
+            </ButtonLay>
+          </Content>
+        </ContentsBox>
       </PostBdx>
 
       <StComment>
@@ -71,6 +79,26 @@ const Detail = () => {
 };
 
 export default Detail;
+const ContentsBox = styled.div`
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+`;
+
+const Content = styled.div`
+  margin: 0 20px;
+`;
+
+const DetailImg = styled.img`
+  padding: 30px;
+
+  width: 90%;
+  height: 90%;
+
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+`;
 
 const PostBdx = styled.div`
   max-width: 1000px;
@@ -80,7 +108,7 @@ const PostBdx = styled.div`
   margin: 100px auto;
 
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-  border-radius: 30px;
+  border-radius: 10px;
   border: 1px solid lightgray;
 
   display: flex;
@@ -99,11 +127,11 @@ const ButtonLay = styled.div`
   width: 200px;
   height: 70px;
 
-  margin: 5px auto 20px auto;
+  margin: 30px auto 20px auto;
 `;
 
 const Button = styled(ButtonBox)`
-  background-color: #ffecef;
+  background-color: #ededed;
   border-radius: 3px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   &:first-child {
@@ -125,18 +153,18 @@ const StPostTitle = styled.div`
   align-items: center;
   margin: 10px auto 10px auto;
   text-align: center;
-  border-radius: 20px;
-  background-color: #ffecef;
+  border-radius: 10px;
+  background-color: #ededed;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 `;
 
 const StPostContent = styled.div`
   font-size: 20px;
-  width: 700px;
+  width: 500px;
   margin: 20px auto;
   border: 1px solid lightgray;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
+  border-radius: 10px;
   height: 300px;
   display: flex;
   text-align: center;
@@ -161,7 +189,7 @@ const StComment = styled.div`
   margin: 70px auto 0 auto;
 
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-  border-radius: 30px;
+  border-radius: 10px;
   border: 1px solid lightgray;
   overflow: scroll;
 `;

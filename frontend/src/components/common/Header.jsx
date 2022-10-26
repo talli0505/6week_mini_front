@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ButtonBox } from "./Button";
 import Button from "./Button";
+import { ButtonBox } from "./Button";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
 // import fork from "../../img/logo.png";
 
 const Header = () => {
@@ -90,7 +89,9 @@ const BottonBlock = styled(Block)`
 `;
 
 const LastButton = styled(ButtonBox)`
-  border: none;
+  &:last-child {
+    border: none;
+  }
 `;
 
 const TitleBlock = styled(Block)`
@@ -120,14 +121,16 @@ const Title = styled.div`
 
 const UserInfo = styled.div`
   font-size: 20px;
-  font-weight: 100;
+  font-weight: 200;
+
+  margin: 0 20px 3px 0;
 `;
 
 const UserInfoBlock = styled(Block)`
   display: flex;
   flex-direction: column;
 
-  align-items: center;
+  align-items: end;
 `;
 
 const Desc = styled.div`
