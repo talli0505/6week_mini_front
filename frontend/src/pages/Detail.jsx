@@ -23,6 +23,7 @@ const Detail = () => {
     let isDelete = window.confirm("삭제하시겠습니까?");
     if (isDelete) {
       dispatch(__deletePostsById(postId));
+
       navigate("/");
     }
   };
