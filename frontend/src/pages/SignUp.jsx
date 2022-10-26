@@ -19,7 +19,8 @@ const SignUp = () => {
     const eng = /^[a-zA-Z]*$/;
     const checkPwd =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{4,}$/;
-
+    const checkEmail =
+      /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (emailRef.current.value == "") {
       alert("이메일을 입력해 주세요");
     } else if (nicknameRef.current.value == "") {
@@ -34,6 +35,8 @@ const SignUp = () => {
       eng.test(nicknameRef.current.value)
     ) {
       alert("닉네임은 영여로, `최소 3자 이상, 특수 문자를 포함하면 안됩니다`");
+    } else if (!checkEmail.test(emailRef.current.value)) {
+      alert("이메일 형식이 올바르지 않습니다.");
     } else if (!checkPwd.test(passwordRef.current.value)) {
       alert(
         "비밀번호는 최소 4글자 이상, 알파벳 대소문자(a~z, A~Z), 숫자(0~9), 특수문자를 포함해야 합니다"
@@ -48,6 +51,7 @@ const SignUp = () => {
         confirmPassword: confirmRef.current.value,
       };
       dispatch(__postSignup(JSON.stringify(signUpBody)));
+      navigate("/");
     }
   };
 
@@ -117,7 +121,6 @@ const SignUp = () => {
             <button
               onClick={() => {
                 onSignUpHandler();
-                navigate("/");
               }}
               className="group relative flex w-full justify-center rounded-md border border-transparent bg-gray-300 py-2 px-4 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >

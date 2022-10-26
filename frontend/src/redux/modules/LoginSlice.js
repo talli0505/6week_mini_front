@@ -16,12 +16,14 @@ export const __postLogin = createAsyncThunk(
           },
         }
       );
+      console.log(data);
       // 토큰 발급
       const { token } = await data;
-
+      const { userNickname } = await data;
       //토큰 로컬 스토리지에 저장
       const localSet = window.localStorage;
       localSet.setItem("token", token);
+      localSet.setItem("userNickname", userNickname);
 
       return thunkAPI.fulfillWithValue(data);
     } catch (error) {

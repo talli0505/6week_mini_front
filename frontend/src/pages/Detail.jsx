@@ -10,8 +10,9 @@ import {
   __patchPostsById,
 } from "../redux/modules/postsSlice";
 import { __postPosts } from "../redux/modules/postsSlice";
-import Button from "../components/common/Button";
+import { ButtonBox } from "../components/common/Button";
 import { __getComments } from "../redux/modules/commentsSlice";
+import LoginLayout from "../components/common/LoginLayout";
 const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -54,17 +55,16 @@ const Detail = () => {
 
   return (
     <Layout>
-      <StPost>
-        <PostBdx>
-          <StPostTitle>{postData?.title}</StPostTitle>
-          <StPostContent>{postData?.content}</StPostContent>
-          <StPostNickname>{postData?.nickname}</StPostNickname>
-        </PostBdx>
-        <ButtonBox>
+      <PostBdx>
+        <StPostNickname>작성자 : {postData?.nickname}</StPostNickname>
+        <StPostTitle>제목 : {postData?.title}</StPostTitle>
+        <StPostContent>{postData?.content}</StPostContent>
+
+        <ButtonLay>
           <Button onClick={() => dispatchDeletePost(id)}>게시글 삭제</Button>
           <Button onClick={() => navigateModify(id)}>게시글 수정</Button>
-        </ButtonBox>
-      </StPost>
+        </ButtonLay>
+      </PostBdx>
 
       <StComment>
         <CommentList />
@@ -75,43 +75,66 @@ const Detail = () => {
 
 export default Detail;
 
-const StPost = styled.div`
+const PostBdx = styled.div`
   max-width: 1000px;
   width: 100%;
   height: 500px;
-  margin: auto;
 
-  display: flex;
-  justify-content: center;
-`;
-
-const PostBdx = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const ButtonBox = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  margin: 70px auto 0 auto;
+  margin: 100px auto;
 
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   border-radius: 30px;
   border: 1px solid lightgray;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+`;
+
+const ButtonLay = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 70px;
+
+  margin: 0 auto;
+`;
+
+const Button = styled(ButtonBox)`
+  &:first-child {
+    padding-right: 5px;
+  }
+  &:last-child {
+    border: none;
+  }
 `;
 
 const StPostTitle = styled.div`
-  font-size: 40px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 30px auto 10px auto;
+  text-align: center;
 `;
 
 const StPostContent = styled.div`
   font-size: 20px;
-  margin: 5px auto 5px 20px;
+  margin: 5px auto;
+  height: 300px;
+
+  text-align: center;
+
+  display: flex;
+  align-items: center;
 `;
 
 const StPostNickname = styled.div`
-  font-size: 20px;
+  font-size: 15px;
+  text-align: center;
 `;
 
 const StComment = styled.div`
@@ -125,10 +148,4 @@ const StComment = styled.div`
   border-radius: 30px;
   border: 1px solid lightgray;
   overflow: scroll;
-`;
-
-const StWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 20px auto 20px;
 `;

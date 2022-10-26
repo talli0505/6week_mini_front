@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonBox } from "./Button";
 import Button from "./Button";
@@ -9,35 +9,37 @@ import { useSelector } from "react-redux";
 const Header = () => {
   const navigate = useNavigate();
 
-  const globalLogin = useSelector((state) => state.login.userNickname);
-  // const globalPosts = useSelector((state) => state.posts.data);
+  const [isLogin, setIsLogin] = useState(false);
 
-  // console.log(globalLogin);
-
-  // const tokenDelete = () => {
-  //   localStorage.clear();
-  //   setIsToken(true);
-  // };
+  const onLogout = () => {
+    if (window.confirm("로그아웃 하시겠습니까?")) {
+      localStorage.clear();
+      setIsLogin(true);
+    }
+  };
 
   let loginContents = null;
+  const localUserNic = localStorage.getItem("userNickname");
 
-  // if (!isToken) {
-  //   loginContents = (
-  //     <div>
-  //       <div>{globalLogin}님 환영합니다</div>
-  //       <LastButton onClick={() => navigate("/form")}>게시글작성</LastButton>
-  //       <LastButton onClick={() => tokenDelete()}>로그아웃</LastButton>
-  //     </div>
-  //   );
-  // } else {
-  loginContents = (
-    <BottonBlock>
-      <Button onClick={() => navigate("/signup")}>회원가입</Button>
-      <Button onClick={() => navigate("/login")}>로그인하기</Button>
-      <LastButton onClick={() => navigate("/form")}>게시글작성</LastButton>
-    </BottonBlock>
-  );
-  // }
+  if (localUserNic) {
+    loginContents = (
+      <UserInfoBlock>
+        <UserInfo>{localUserNic}님 환영합니다</UserInfo>
+        <div>
+          <LastButton onClick={() => navigate("/form")}>게시글작성</LastButton>
+          <LastButton onClick={() => onLogout()}>로그아웃</LastButton>
+        </div>
+      </UserInfoBlock>
+    );
+  } else {
+    loginContents = (
+      <BottonBlock>
+        <Button onClick={() => navigate("/signup")}>회원가입</Button>
+        <Button onClick={() => navigate("/login")}>로그인하기</Button>
+        <LastButton onClick={() => navigate("/form")}>게시글작성</LastButton>
+      </BottonBlock>
+    );
+  }
 
   return (
     <HeaderBox>
@@ -109,6 +111,18 @@ const Title = styled.div`
   justify-content: center;
 
   font-weight: 700;
+`;
+
+const UserInfo = styled.div`
+  font-size: 20px;
+  font-weight: 100;
+`;
+
+const UserInfoBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
 `;
 
 const Desc = styled.div`
