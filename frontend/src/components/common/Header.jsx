@@ -118,7 +118,7 @@ const UserInfo = styled.div`
   font-weight: 100;
 `;
 
-const UserInfoBlock = styled.div`
+const UserInfoBlock = styled(Block)`
   display: flex;
   flex-direction: column;
 
