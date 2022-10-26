@@ -26,7 +26,6 @@ export const __getPosts = createAsyncThunk(
 export const __postPosts = createAsyncThunk(
   "posts/postPosts",
   async (payload, thunkAPI) => {
-    console.log("안녕 난 body", payload);
     const token = localStorage.getItem("token");
     try {
       const { data } = await axios.post(`${url}/posts`, payload, {

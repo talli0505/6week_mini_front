@@ -3,19 +3,17 @@ import axios from "axios";
 
 const initialState = {};
 
+const url = process.env.REACT_APP_BACK_BASE_URL;
+
 export const __postLogin = createAsyncThunk(
   "posts/postLogin",
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.post(
-        "http://localhost:4000/users/login",
-        payload,
-        {
-          headers: {
-            "Content-Type": `application/json`, // application/json 타입 선언
-          },
-        }
-      );
+      const { data } = await axios.post(`${url}/users/login`, payload, {
+        headers: {
+          "Content-Type": `application/json`,
+        },
+      });
       console.log(data);
       // 토큰 발급
       const { token } = await data;
