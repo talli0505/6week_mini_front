@@ -11,12 +11,11 @@ import { __getComments } from "../redux/modules/commentsSlice";
 const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
-  const postData = useSelector((state) => state.posts.data);
 
-  const { nickname } = useSelector((state) => state.comments.comments);
-  console.log(nickname);
+  const postData = useSelector((state) => state.posts.data);
+  const commentData = useSelector((state) => state.comments.comments.message);
+  console.log(commentData);
   // 게시글 삭제 핸들러
 
   const dispatchDeletePost = (postId) => {
@@ -64,7 +63,7 @@ const Detail = () => {
       </PostBdx>
 
       <StComment>
-        <CommentList nickname={nickname} />
+        <CommentList commentData={commentData} />
       </StComment>
     </Layout>
   );

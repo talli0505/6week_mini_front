@@ -8,7 +8,7 @@ import {
 } from "react-icons/bs";
 import styled from "styled-components";
 
-const Comment = ({ comment, nickname }) => {
+const Comment = ({ comment }) => {
   const dispatch = useDispatch();
   const [mode, setMode] = useState("read");
   const edit_content = useRef();
@@ -17,8 +17,9 @@ const Comment = ({ comment, nickname }) => {
     <div>
       {mode === "read" ? (
         <StWrap>
-          <StNick>{nickname} </StNick>
+          <StNick>{comment.nickname} </StNick>
           <StComment>{comment.comment} </StComment>
+
           <StEditBtn>
             <BsPencilSquare
               size="23"
@@ -32,13 +33,14 @@ const Comment = ({ comment, nickname }) => {
               size="22"
               onClick={() => {
                 dispatch(__delComment(comment.commentId));
+                window.confirm("삭제되었습니다.");
               }}
             />
           </StDelBtn>
         </StWrap>
       ) : (
         <StWrap>
-          <StNick>{nickname} </StNick>
+          <StNick>{comment.nickname} </StNick>
           <UpdataComment
             type="text"
             defaultValue={comment.comment}
@@ -55,14 +57,18 @@ const Comment = ({ comment, nickname }) => {
                     comment: edit_content.current.value,
                   })
                 );
+                window.confirm("댓글이 수정되었습니다.");
+                window.location.reload();
                 setMode("read");
               }}
+              s
             />
           </StUpBtn>
           <StDelBtn>
             <BsXCircleFill
               size="22"
               onClick={() => {
+                window.confirm("취소되었습니다.");
                 setMode("read");
               }}
             />
@@ -80,20 +86,22 @@ const StWrap = styled.div`
 `;
 const StNick = styled.div`
   border: none;
-  width: 100px;
+  width: 120px;
   height: 70px;
   text-align: center;
   border-radius: 20px;
   line-height: 70px;
   margin: 0 0 0 17px;
+  word-break: break-all;
   //border: 1px solid gray;
 `;
 const StComment = styled.div`
   width: 800px;
-  height: 70px;
+  min-height: 70px;
   border-radius: 20px;
   line-height: 70px;
-  margin: 0 0 0 10px;
+  margin: 0 0 0 25px;
+  word-break: break-all;
   //border: 1px solid gray;
 `;
 const StEditBtn = styled.div`

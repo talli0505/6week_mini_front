@@ -1,7 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = {};
+const initialState = {
+  userinfo: "",
+};
 
 export const __postLogin = createAsyncThunk(
   "posts/postLogin",
@@ -39,7 +41,8 @@ const loginSlice = createSlice({
   extraReducers: {
     [__postLogin.fulfilled]: (state, action) => {
       alert(`${action.payload.userNickname}님 환영합니다`);
-      state.userNickname = action.payload.userNickname;
+      state.userinfo = action.payload.userNickname;
+      console.log(current(state));
     },
     [__postLogin.rejected]: (state, action) => {
       alert(action.payload);
