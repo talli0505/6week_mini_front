@@ -21,20 +21,26 @@ const Detail = () => {
   // 게시글 삭제 핸들러
 
   const dispatchDeletePost = (postId) => {
-    dispatch(__deletePostsById(postId));
-    // navigate("/");
+    let isDelete = window.confirm("삭제하시겠습니까?");
+    if (isDelete) {
+      dispatch(__deletePostsById(postId));
+      navigate("/");
+    }
   };
 
   //게시글 수정 페이지 이동
 
   const navigateModify = (id) => {
-    navigate("/Modify", {
-      state: {
-        title: postData?.title,
-        content: postData?.content,
-        postId: id,
-      },
-    });
+    let isEdit = window.confirm("수정하시겠습니까?");
+    if (isEdit) {
+      navigate("/Modify", {
+        state: {
+          title: postData?.title,
+          content: postData?.content,
+          postId: id,
+        },
+      });
+    }
   };
 
   useEffect(() => {

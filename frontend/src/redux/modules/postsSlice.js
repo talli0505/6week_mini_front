@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  data: [],
+  data: [{ title: "", content: "", nickname: "", postId: "" }],
   isLoading: false,
   error: null,
 };
@@ -55,8 +55,8 @@ export const __deletePostsById = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("delete response__ : ", data);
-      return thunkAPI.fulfillWithValue(data);
+      // console.log("delete response__ : ", data, payload);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);
@@ -83,6 +83,8 @@ export const __putPostsById = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+      // console.log("put response__ : ", data, payload);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -127,13 +129,25 @@ const postsSlice = createSlice({
       alert(action.payload);
     },
     //게시글 delete 액션
-    [__deletePostsById.fulfilled]: (state, action) => {},
-    [__deletePostsById.rejected]: (state, action) => {
-      alert(action.payload);
+    [__deletePostsById.fulfilled]: (state, action) => {
+      state.data = state.data.filter((item) => {
+        return item.postId !== action.payload;
+      });
+      alert("삭제가 완료되었습니다. 메인으로 이동합니다.");
     },
-    //게시글 patch 액션
+    [__deletePostsById.rejected]: (state, action) => {
+      alert(
+        action.payload,
+        "이미등록되었거나 없는 게시글입니다. 메인으로 이동합니다."
+      );
+    },
+    //게시글 put 액션
     [__putPostsById.fulfilled]: (state, action) => {
-      alert("성공");
+      state.replies.forEach((post) => {
+        // if (post.postId === action.payload) return post;
+        // return post;
+      });
+      alert("수정에 성공했습니다. 메인페이지로 이동합니다.");
     },
     [__putPostsById.rejected]: (state, action) => {
       alert(action.payload);

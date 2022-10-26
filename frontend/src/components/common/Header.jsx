@@ -11,36 +11,34 @@ const Header = () => {
   const navigate = useNavigate();
 
   const globalLogin = useSelector((state) => state.login.userNickname);
-  const globalPosts = useSelector((state) => state.posts.data);
+  // const globalPosts = useSelector((state) => state.posts.data);
 
-  const [isToken, setIsToken] = useState(false);
+  // console.log(globalLogin);
 
-  console.log(globalLogin);
-
-  const tokenDelete = () => {
-    localStorage.clear();
-    setIsToken(true);
-  };
+  // const tokenDelete = () => {
+  //   localStorage.clear();
+  //   setIsToken(true);
+  // };
 
   let loginContents = null;
 
-  if (!isToken) {
-    loginContents = (
-      <div>
-        <div>{globalLogin}님 환영합니다</div>
-        <LastButton onClick={() => navigate("/form")}>게시글작성</LastButton>
-        <LastButton onClick={() => tokenDelete()}>로그아웃</LastButton>
-      </div>
-    );
-  } else {
-    loginContents = (
-      <BottonBlock>
-        <Button onClick={() => navigate("/signup")}>회원가입</Button>
-        <Button onClick={() => navigate("/login")}>로그인하기</Button>
-        <LastButton onClick={() => navigate("/form")}>게시글작성</LastButton>
-      </BottonBlock>
-    );
-  }
+  // if (!isToken) {
+  //   loginContents = (
+  //     <div>
+  //       <div>{globalLogin}님 환영합니다</div>
+  //       <LastButton onClick={() => navigate("/form")}>게시글작성</LastButton>
+  //       <LastButton onClick={() => tokenDelete()}>로그아웃</LastButton>
+  //     </div>
+  //   );
+  // } else {
+  loginContents = (
+    <BottonBlock>
+      <Button onClick={() => navigate("/signup")}>회원가입</Button>
+      <Button onClick={() => navigate("/login")}>로그인하기</Button>
+      <LastButton onClick={() => navigate("/form")}>게시글작성</LastButton>
+    </BottonBlock>
+  );
+  // }
 
   return (
     <HeaderBox>

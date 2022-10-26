@@ -25,7 +25,8 @@ const Modify = () => {
       content: contentRef.current.value,
     };
     dispatch(__putPostsById({ ...patchContentBody, postId: postId }));
-    // navigate("/");
+
+    navigate("/");
   };
   return (
     <Layout>

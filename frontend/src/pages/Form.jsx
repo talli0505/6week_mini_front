@@ -16,6 +16,8 @@ const Form = () => {
   const contentRef = useRef();
 
   const onClickHandler = () => {
+    let isPost = window.confirm("글을 등록하시겠습니까?");
+
     const detailBody = {
       title: titleRef.current.value,
       content: contentRef.current.value,
@@ -41,7 +43,6 @@ const Form = () => {
         </FormButton>
       </LoginLayout>
     </Layout>
-
   );
 };
 
