@@ -26,7 +26,7 @@ const Detail = () => {
     let isDelete = window.confirm("삭제하시겠습니까?");
     if (isDelete) {
       dispatch(__deletePostsById(postId));
-      alert("삭제가 완료되었습니다. 메인페이지로 이동합니다");
+
       navigate("/");
     }
   };

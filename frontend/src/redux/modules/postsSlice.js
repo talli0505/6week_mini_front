@@ -145,16 +145,13 @@ const postsSlice = createSlice({
     },
     //게시글 delete 액션
     [__deletePostsById.fulfilled]: (state, action) => {
-      state.data = state.data.filter((item) => {
-        return item.postId !== action.payload;
-      });
+      // state.data = state.data.filter((item) => {
+      //   return item.postId !== action.payload;
+      // });
       alert("삭제가 완료되었습니다. 메인으로 이동합니다.");
     },
     [__deletePostsById.rejected]: (state, action) => {
-      alert(
-        action.payload,
-        "이미등록되었거나 없는 게시글입니다. 메인으로 이동합니다."
-      );
+      alert("삭제 권한이 없습니다. 메인으로 이동합니다.");
     },
     //게시글 put 액션
     [__putPostsById.fulfilled]: (state, action) => {
