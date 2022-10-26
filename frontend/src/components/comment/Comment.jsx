@@ -8,7 +8,7 @@ import {
 } from "react-icons/bs";
 import styled from "styled-components";
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, nickname }) => {
   const dispatch = useDispatch();
   const [mode, setMode] = useState("read");
   const edit_content = useRef();
@@ -17,7 +17,7 @@ const Comment = ({ comment }) => {
     <div>
       {mode === "read" ? (
         <StWrap>
-          <StNick>{comment.commentId} </StNick>
+          <StNick>{nickname} </StNick>
           <StComment>{comment.comment} </StComment>
           <StEditBtn>
             <BsPencilSquare
@@ -38,7 +38,7 @@ const Comment = ({ comment }) => {
         </StWrap>
       ) : (
         <StWrap>
-          <StNick>{comment.commentId} </StNick>
+          <StNick>{nickname} </StNick>
           <UpdataComment
             type="text"
             defaultValue={comment.comment}
@@ -85,6 +85,7 @@ const StNick = styled.div`
   text-align: center;
   border-radius: 20px;
   line-height: 70px;
+  margin: 0 0 0 17px;
   //border: 1px solid gray;
 `;
 const StComment = styled.div`
@@ -92,6 +93,7 @@ const StComment = styled.div`
   height: 70px;
   border-radius: 20px;
   line-height: 70px;
+  margin: 0 0 0 10px;
   //border: 1px solid gray;
 `;
 const StEditBtn = styled.div`

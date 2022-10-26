@@ -3,18 +3,20 @@ import AddComment from "./AddComment";
 import Comment from "./Comment";
 import { useSelector } from "react-redux";
 
-const CommentList = () => {
+const CommentList = ({ nickname }) => {
   const commentData = useSelector((state) => state.comments.comments.message);
   console.log(commentData);
 
   return (
     <div>
       <AddComment />
-      {commentData?.map((comment) => (
-        <div>
-          <Comment key={comment.commetId} comment={comment} />
-        </div>
-      ))}
+      {commentData?.map((comment) => {
+        return (
+          <div key={comment.commentId}>
+            <Comment comment={comment} nickname={nickname} />
+          </div>
+        );
+      })}
     </div>
   );
 };
