@@ -11,6 +11,7 @@ import {
 } from "../redux/modules/postsSlice";
 import { __postPosts } from "../redux/modules/postsSlice";
 import Button from "../components/common/Button";
+import { __getComments } from "../redux/modules/commentsSlice";
 const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -45,6 +46,10 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(__getPostById(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    dispatch(__getComments(id));
   }, [dispatch, id]);
 
   return (
