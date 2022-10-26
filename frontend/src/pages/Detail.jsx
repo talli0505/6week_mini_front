@@ -13,6 +13,7 @@ const Detail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const postData = useSelector((state) => state.posts.current);
   const postData = useSelector((state) => state.posts.data);
   const commentData = useSelector((state) => state.comments.comments.message);
   console.log(commentData);
@@ -22,6 +23,7 @@ const Detail = () => {
     let isDelete = window.confirm("삭제하시겠습니까?");
     if (isDelete) {
       dispatch(__deletePostsById(postId));
+      alert("삭제가 완료되었습니다. 메인으로 이동합니다.");
       navigate("/");
     }
   };

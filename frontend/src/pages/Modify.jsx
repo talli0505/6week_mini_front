@@ -20,13 +20,17 @@ const Modify = () => {
   const postId = location.state.postId;
 
   const dispatchPatchPostById = (postId) => {
-    const patchContentBody = {
-      title: titleRef.current.value,
-      content: contentRef.current.value,
-    };
-    dispatch(__putPostsById({ ...patchContentBody, postId: postId }));
+    let isPatch = window.confirm("수정 완료 하시겠습니까?");
 
-    navigate("/");
+    if (isPatch) {
+      const patchContentBody = {
+        title: titleRef.current.value,
+        content: contentRef.current.value,
+      };
+      dispatch(__putPostsById({ ...patchContentBody, postId: postId }));
+      alert("수정에 성공했습니다. 메인페이지로 이동합니다.");
+      navigate("/");
+    }
   };
   return (
     <Layout>

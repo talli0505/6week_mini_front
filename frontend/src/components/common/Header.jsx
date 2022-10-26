@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonBox } from "./Button";
 import Button from "./Button";
@@ -8,13 +8,18 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
-
   const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLogin(true);
+    }
+  }, []);
 
   const onLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
       localStorage.clear();
-      setIsLogin(true);
+      setIsLogin(false);
     }
   };
 
@@ -118,7 +123,7 @@ const UserInfo = styled.div`
   font-weight: 100;
 `;
 
-const UserInfoBlock = styled.div`
+const UserInfoBlock = styled(Block)`
   display: flex;
   flex-direction: column;
 
