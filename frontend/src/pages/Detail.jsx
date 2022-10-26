@@ -54,7 +54,7 @@ const Detail = () => {
     <Layout>
       <PostBdx>
         <StPostNickname>작성자 : {postData?.nickname}</StPostNickname>
-        <StPostTitle>제목 : {postData?.title}</StPostTitle>
+        <StPostTitle>{postData?.title}</StPostTitle>
         <StPostContent>{postData?.content}</StPostContent>
 
         <ButtonLay>
@@ -99,10 +99,13 @@ const ButtonLay = styled.div`
   width: 200px;
   height: 70px;
 
-  margin: 0 auto;
+  margin: 5px auto 20px auto;
 `;
 
 const Button = styled(ButtonBox)`
+  background-color: #ffecef;
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   &:first-child {
     padding-right: 5px;
   }
@@ -112,26 +115,42 @@ const Button = styled(ButtonBox)`
 `;
 
 const StPostTitle = styled.div`
+  width: 400px;
+  height: 70px;
   font-size: 1.5rem;
   font-weight: 500;
-  margin: 30px auto 10px auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto 10px auto;
   text-align: center;
+  border-radius: 20px;
+  background-color: #ffecef;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 `;
 
 const StPostContent = styled.div`
   font-size: 20px;
-  margin: 5px auto;
+  width: 700px;
+  margin: 20px auto;
+  border: 1px solid lightgray;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
   height: 300px;
-
-  text-align: center;
-
   display: flex;
+  text-align: center;
+  justify-content: center;
+
   align-items: center;
 `;
 
 const StPostNickname = styled.div`
   font-size: 15px;
+  font-weight: 600;
   text-align: center;
+
+  margin: 10px auto;
 `;
 
 const StComment = styled.div`
