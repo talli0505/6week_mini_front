@@ -5,6 +5,7 @@ import axios from "axios";
 const initialState = {
   comments: {
     message: [],
+    nickname: [],
   },
   isLoading: false,
   error: null,
@@ -128,9 +129,10 @@ export const commentsSlice = createSlice({
     },
     [__postComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload); // 여기서 값을 못받아와
+      console.log(action.payload.createcomments.nickname); // 여기서 값을 못받아와
       console.log(current(state));
-      state.comments.message.push(action.payload.createcomments);
+      state.comments.message.push(action.payload);
+      state.comments.nickname = action.payload.createcomments.nickname;
       console.log(current(state));
     },
     [__postComment.rejected]: (state, action) => {

@@ -4,15 +4,10 @@ import Layout from "../components/common/Layout";
 import CommentList from "../components/comment/CommentList";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  __deletePostsById,
-  __getPostById,
-  __patchPostsById,
-} from "../redux/modules/postsSlice";
-import { __postPosts } from "../redux/modules/postsSlice";
+import { __deletePostsById, __getPostById } from "../redux/modules/postsSlice";
 import { ButtonBox } from "../components/common/Button";
 import { __getComments } from "../redux/modules/commentsSlice";
-import LoginLayout from "../components/common/LoginLayout";
+
 const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -20,6 +15,8 @@ const Detail = () => {
   const dispatch = useDispatch();
   const postData = useSelector((state) => state.posts.data);
 
+  const { nickname } = useSelector((state) => state.comments.comments);
+  console.log(nickname);
   // 게시글 삭제 핸들러
 
   const dispatchDeletePost = (postId) => {
@@ -67,7 +64,7 @@ const Detail = () => {
       </PostBdx>
 
       <StComment>
-        <CommentList />
+        <CommentList nickname={nickname} />
       </StComment>
     </Layout>
   );
