@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const navigate = useNavigate();
-
   const [isLogin, setIsLogin] = useState(false);
 
   const onLogout = () => {
