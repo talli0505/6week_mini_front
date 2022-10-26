@@ -7,13 +7,13 @@ const initialState = {
   error: null,
 };
 
-const url = "http://localhost:4000";
+const url = process.env.REACT_APP_BACK_BASE_URL;
 
 export const __getPosts = createAsyncThunk(
   "posts/getPosts", //메인페이지 전체 게시글 가져오기
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(url + "/posts");
+      const { data } = await axios.get(`${url}/posts`);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
@@ -29,7 +29,7 @@ export const __postPosts = createAsyncThunk(
     console.log("안녕 난 body", payload);
     const token = localStorage.getItem("token");
     try {
-      const { data } = await axios.post(url + "/posts", payload, {
+      const { data } = await axios.post(`${url}/posts`, payload, {
         headers: {
           "Content-Type": `application/json`,
           Authorization: `Bearer ${token}`,
@@ -50,7 +50,7 @@ export const __deletePostsById = createAsyncThunk(
   async (payload, thunkAPI) => {
     const token = localStorage.getItem("token");
     try {
-      const { data } = await axios.delete(url + `/posts/${payload}`, {
+      const { data } = await axios.delete(`${url}/posts/${payload}`, {
         headers: {
           "Content-Type": `application/json`,
           Authorization: `Bearer ${token}`,
@@ -82,7 +82,7 @@ export const __putPostsById = createAsyncThunk(
     try {
       //서버랑 통신하고
       const responseData = await axios.put(
-        url + `/posts/${sendPostId}`,
+        `${url}/posts/${sendPostId}`,
         sendData,
         {
           headers: {
@@ -110,9 +110,7 @@ export const __getPostById = createAsyncThunk(
   "posts/getPostById", //상세페이지 특정 id 게시글 가져오기
   async (payload, thunkAPI) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:4000/posts/${payload}`
-      );
+      const { data } = await axios.get(`${url}/posts/${payload}`);
       return thunkAPI.fulfillWithValue(data.post);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
