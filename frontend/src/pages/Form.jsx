@@ -16,13 +16,19 @@ const Form = () => {
   const contentRef = useRef();
 
   const onClickHandler = () => {
-    let isPost = window.confirm("글을 등록하시겠습니까?");
+    if (titleRef.current.value.length < 10) {
+      alert("제목을 10자 이상 입력해주세요");
+    } else if (contentRef.current.value.length < 10) {
+      alert("본문을 10자 이상 입력해주세요");
+    } else if (window.confirm("글을 등록하시겠습니까?")) {
+      const detailBody = {
+        title: titleRef.current.value,
+        content: contentRef.current.value,
+      };
+      dispatch(__postPosts(JSON.stringify(detailBody)));
 
-    const detailBody = {
-      title: titleRef.current.value,
-      content: contentRef.current.value,
-    };
-    dispatch(__postPosts(JSON.stringify(detailBody)));
+      navigate("/");
+    }
   };
 
   return (
@@ -36,7 +42,6 @@ const Form = () => {
         <FormButton
           onClick={() => {
             onClickHandler();
-            navigate("/");
           }}
         >
           글 등록
