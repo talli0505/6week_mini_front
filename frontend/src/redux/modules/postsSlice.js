@@ -1,8 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
   data: [],
+  current: {},
   isLoading: false,
   error: null,
 };
@@ -34,8 +35,7 @@ export const __postPosts = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      const { title, content, nickname } = data.data;
-      return thunkAPI.fulfillWithValue({ title, content, nickname });
+      return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error);
@@ -55,7 +55,7 @@ export const __deletePostsById = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log("delete response__ : ", data, payload);
+      console.log("delete response__ : ", data, payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       console.log(error);
@@ -130,12 +130,9 @@ const postsSlice = createSlice({
       alert(action.payload);
     },
     //게시글 post 액션
-    [__postPosts.fulfilled]: (state, { payload }) => {
-      state.data.push({
-        title: `${payload.title}`,
-        content: `${payload.content}`,
-        nickname: `${payload.nickname}`,
-      });
+    [__postPosts.fulfilled]: (state, action) => {
+      console.log(current(state.data));
+      state.data = [...state.data, action.payload];
     },
     [__postPosts.rejected]: (state, action) => {
       alert(action.payload);
@@ -143,34 +140,20 @@ const postsSlice = createSlice({
     //게시글 delete 액션
     [__deletePostsById.fulfilled]: (state, action) => {
       // state.data = state.data.filter((item) => {
-      //   return item.postId !== action.payload;
+      //   return item.postId !== Number(action.payload);
       // });
-      alert("삭제가 완료되었습니다. 메인으로 이동합니다.");
     },
     [__deletePostsById.rejected]: (state, action) => {
       alert("삭제 권한이 없습니다. 메인으로 이동합니다.");
     },
     //게시글 put 액션
-    [__putPostsById.fulfilled]: (state, action) => {
-      // state.replies.forEach((post) => {
-      //   console.log(post.postId);
-      //   console.log(action.payload);
-      //   if (post.postId === action.payload.postId)
-      //     return {
-      //       ...post,
-      //       title: action.payload.title,
-      //       content: action.payload.content,
-      //     };
-      //   return post;
-      // });
-      // alert("수정에 성공했습니다. 메인페이지로 이동합니다.");
-    },
+    [__putPostsById.fulfilled]: (state, action) => {},
     [__putPostsById.rejected]: (state, action) => {
       alert(action.payload);
     },
     // id별 상세 불러오기 액션
     [__getPostById.fulfilled]: (state, action) => {
-      state.data = action.payload;
+      state.current = action.payload;
     },
     [__getPostById.rejected]: (state, action) => {
       alert(action.payload);

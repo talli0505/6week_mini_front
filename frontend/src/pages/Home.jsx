@@ -10,9 +10,11 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(__getPosts());
-  }, [dispatch]);
+  }, []);
 
   const globalPosts = useSelector((state) => state.posts.data);
+
+  console.log(globalPosts);
 
   // console.log("포스팅 전역변수", globalPosts);
 
