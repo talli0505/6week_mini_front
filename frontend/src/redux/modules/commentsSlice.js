@@ -5,7 +5,6 @@ import axios from "axios";
 const initialState = {
   comments: {
     message: [],
-    nickname: [],
   },
   isLoading: false,
   error: null,
@@ -50,8 +49,8 @@ export const __postComment = createAsyncThunk(
           },
         }
       );
-      console.log(data); //여기서 값이 이상해
-      return thunkAPI.fulfillWithValue(data);
+      console.log("postcomment", data);
+      return thunkAPI.fulfillWithValue(data.createcomments.create);
     } catch (error) {
       console.log(error);
       return thunkAPI.rejectWithValue(error.code);
@@ -84,7 +83,7 @@ export const __editComment = createAsyncThunk(
     console.log(payload);
     const token = localStorage.getItem("token");
     try {
-      await axios.put(
+      await axios.patch(
         url + `/comments/${payload.commentId}`,
         JSON.stringify({
           commentId: payload.commentId,
@@ -129,11 +128,7 @@ export const commentsSlice = createSlice({
     },
     [__postComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload.createcomments.nickname); // 여기서 값을 못받아와
-      console.log(current(state));
-      state.comments.message.push(action.payload);
-      state.comments.nickname = action.payload.createcomments.nickname;
-      console.log(current(state));
+      state.comments.message = [action.payload, ...state.comments.message];
     },
     [__postComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -161,18 +156,11 @@ export const commentsSlice = createSlice({
     },
     [__editComment.fulfilled]: (state, action) => {
       state.isLoading = false;
-      console.log(current(state));
-      console.log(action.payload);
-      const newComments = state.comments.message.map((comment) => {
-        if (comment.commentId === action.payload.commentId) {
-          return action.payload;
-        } else {
-          return comment;
-        }
-      });
-
-      state.comments.message = newComments;
-      state.isLoading = false;
+      state.comments.message.map((comment) =>
+        comment.commentId === action.payload.commentId
+          ? { comment: action.payload.comment }
+          : comment
+      );
     },
     [__editComment.rejected]: (state, action) => {
       state.isLoading = false;
@@ -182,5 +170,4 @@ export const commentsSlice = createSlice({
 });
 
 //export reducer
-
 export default commentsSlice.reducer;

@@ -19,6 +19,7 @@ const AddComment = () => {
         __postComment({ comment: commentRef.current.value, id: param.id })
       );
     }
+    //window.location.reload();
     commentRef.current.value = "";
   };
 
@@ -53,13 +54,14 @@ const StWrap = styled.div`
 `;
 const StNick = styled.div`
   display: flex;
-  margin: 18px 15px 0 30px;
+  margin: 18px 40px 0 40px;
 `;
 const StInput = styled.input`
-  width: 800px;
+  width: 750px;
   height: 55px;
   border-radius: 20px;
   margin: 7px 0 0 10px;
+  word-break: break-all;
 `;
 const StBtn = styled.div`
   margin: 22px 20px 0 32px;
