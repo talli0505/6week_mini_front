@@ -8,7 +8,6 @@ const initialState = {
   },
   isLoading: false,
   error: null,
-  isEditMode: false,
 };
 
 const url = "http://localhost:4000";
@@ -37,7 +36,7 @@ export const __getComments = createAsyncThunk(
 export const __postComment = createAsyncThunk(
   "postComment", //댓글 추가
   async (payload, thunkAPI) => {
-    console.log(payload.comment);
+    console.log(payload);
     const token = localStorage.getItem("token");
     try {
       const { data } = await axios.post(
@@ -131,7 +130,7 @@ export const commentsSlice = createSlice({
       state.isLoading = false;
       console.log(action.payload); // 여기서 값을 못받아와
       console.log(current(state));
-      //state.comments.message.push(action.payload.createcomments);
+      state.comments.message.push(action.payload.createcomments);
       console.log(current(state));
     },
     [__postComment.rejected]: (state, action) => {
@@ -169,6 +168,7 @@ export const commentsSlice = createSlice({
           return comment;
         }
       });
+
       state.comments.message = newComments;
       state.isLoading = false;
     },
