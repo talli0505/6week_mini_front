@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { __postComment } from "../../redux/modules/commentsSlice";
-import { BsPlusSquare } from "react-icons/bs";
+import { BsPersonFill, BsFillCursorFill } from "react-icons/bs";
 import styled from "styled-components";
 
 const AddComment = () => {
@@ -24,7 +24,9 @@ const AddComment = () => {
 
   return (
     <StWrap>
-      <StNick> username </StNick>
+      <StNick>
+        <BsPersonFill size="38" />
+      </StNick>
       <StInput
         className="h-10 border rounded"
         name="content"
@@ -35,7 +37,7 @@ const AddComment = () => {
       />
 
       <StBtn>
-        <BsPlusSquare size="30" onClick={Handler} />
+        <BsFillCursorFill size="30" onClick={Handler} />
       </StBtn>
     </StWrap>
   );
@@ -43,23 +45,24 @@ const AddComment = () => {
 
 const StWrap = styled.div`
   display: flex;
-  height: 80px;
-  margin-top: 10px;
+  height: 70px;
+  max-width: 975px;
+  margin: 10px 18px 0 18px;
+  border-radius: 18px;
+  background-color: #eeeeef;
 `;
 const StNick = styled.div`
-  border: none;
-  width: 100px;
-  height: 70px;
-  text-align: center;
-  line-height: 70px;
-  border-radius: 20px;
+  display: flex;
+  margin: 18px 15px 0 30px;
 `;
 const StInput = styled.input`
   width: 800px;
-  height: 70px;
+  height: 55px;
   border-radius: 20px;
+  margin: 7px 0 0 10px;
 `;
 const StBtn = styled.div`
-  margin: 15px 0 0 23px;
+  margin: 22px 20px 0 32px;
+  cursor: pointer;
 `;
 export default AddComment;

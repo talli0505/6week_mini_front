@@ -1,7 +1,11 @@
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { __delComment, __editComment } from "../../redux/modules/commentsSlice";
-import { BsXCircleFill, BsEraserFill, BsCheckCircleFill } from "react-icons/bs";
+import {
+  BsXCircleFill,
+  BsCheckCircleFill,
+  BsPencilSquare,
+} from "react-icons/bs";
 import styled from "styled-components";
 
 const Comment = ({ comment }) => {
@@ -16,8 +20,8 @@ const Comment = ({ comment }) => {
           <StNick>{comment.commentId} </StNick>
           <StComment>{comment.comment} </StComment>
           <StEditBtn>
-            <BsEraserFill
-              size="25"
+            <BsPencilSquare
+              size="23"
               onClick={() => {
                 setMode("modify");
               }}
@@ -72,6 +76,7 @@ const StWrap = styled.div`
   display: flex;
   height: 60px;
   margin-top: 5px;
+  border-bottom: 1px solid lightgray;
 `;
 const StNick = styled.div`
   border: none;
@@ -91,15 +96,18 @@ const StComment = styled.div`
 `;
 const StEditBtn = styled.div`
   display: flex;
-  margin: 9px 5px 0 0;
+  margin: 19px 5px 0 0;
+  cursor: pointer;
 `;
 const StDelBtn = styled.div`
   display: flex;
-  margin: 12px 20px 0 10px;
+  margin: 20px 20px 0 10px;
+  cursor: pointer;
 `;
 const StUpBtn = styled.div`
   display: flex;
-  margin: 12px 5px 0 0;
+  margin: 20px 5px 0 0;
+  cursor: pointer;
 `;
 const UpdataComment = styled.textarea`
   &:focus {
