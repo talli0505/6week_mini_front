@@ -47,6 +47,7 @@ export const __postComment = createAsyncThunk(
           },
         }
       );
+      console.log(data);
       return thunkAPI.fulfillWithValue(data.createcomments.create);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -104,24 +105,16 @@ export const commentsSlice = createSlice({
   reducers: {},
   extraReducers: {
     //comment 전체 조회
-    [__getComments.pending]: (state) => {
-      state.isLoading = true;
-    },
     [__getComments.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.comments = action.payload;
-      console.log(action.payload);
     },
     [__getComments.rejected]: (state, action) => {
       state.isLoading = false;
       state.comments.error = action.payload;
     },
     //comment 추가
-    [__postComment.pending]: (state) => {
-      state.isLoading = true;
-    },
     [__postComment.fulfilled]: (state, action) => {
-      state.isLoading = false;
       state.comments.message = [action.payload, ...state.comments.message];
     },
     [__postComment.rejected]: (state, action) => {
