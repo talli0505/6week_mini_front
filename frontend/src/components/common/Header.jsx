@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonBox } from "./Button";
 import Button from "./Button";
@@ -9,6 +9,12 @@ const Header = () => {
   const navigate = useNavigate();
 
   const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsLogin(true);
+    }
+  }, []);
 
   const onLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {

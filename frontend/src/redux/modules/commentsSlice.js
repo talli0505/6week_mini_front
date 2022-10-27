@@ -10,7 +10,7 @@ const initialState = {
   error: null,
 };
 
-const url = "http://localhost:4000";
+const url = process.env.REACT_APP_BACK_BASE_URL;
 
 // {data} 구조분해할당 fulfillwithvalue(data) 데이터값만 보여줌!
 // data , fulfillwithvalue(data.data) data.data 안해주면 config등 쓸데없는거 가져옴
@@ -19,13 +19,12 @@ export const __getComments = createAsyncThunk(
   async (payload, thunkAPI) => {
     const token = localStorage.getItem("token");
     try {
-      const { data } = await axios.get(url + `/comments/${payload}`, {
+      const { data } = await axios.get(`${url}/comments/${payload}`, {
         headers: {
           "Content-Type": `application/json`,
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(data);
       return thunkAPI.fulfillWithValue(data);
     } catch (err) {
       return thunkAPI.rejectWithValue(err.code);
@@ -36,11 +35,10 @@ export const __getComments = createAsyncThunk(
 export const __postComment = createAsyncThunk(
   "postComment", //댓글 추가
   async (payload, thunkAPI) => {
-    console.log(payload);
     const token = localStorage.getItem("token");
     try {
       const { data } = await axios.post(
-        url + `/comments/${payload.id}`,
+        `${url}/comments/${payload.id}`,
         JSON.stringify({ comment: payload.comment }),
         {
           headers: {
@@ -49,10 +47,8 @@ export const __postComment = createAsyncThunk(
           },
         }
       );
-      console.log("postcomment", data);
       return thunkAPI.fulfillWithValue(data.createcomments.create);
     } catch (error) {
-      console.log(error);
       return thunkAPI.rejectWithValue(error.code);
     }
   }
@@ -63,7 +59,7 @@ export const __delComment = createAsyncThunk(
   async (payload, thunkAPI) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(url + `/comments/${payload}`, {
+      await axios.delete(`${url}/comments/${payload}`, {
         headers: {
           "Content-Type": `application/json`,
           Authorization: `Bearer ${token}`,
@@ -80,11 +76,10 @@ export const __delComment = createAsyncThunk(
 export const __editComment = createAsyncThunk(
   "editComment", //댓글수정
   async (payload, thunkAPI) => {
-    console.log(payload);
     const token = localStorage.getItem("token");
     try {
       await axios.patch(
-        url + `/comments/${payload.commentId}`,
+        `${url}/comments/${payload.commentId}`,
         JSON.stringify({
           commentId: payload.commentId,
           comment: payload.comment,
@@ -96,7 +91,6 @@ export const __editComment = createAsyncThunk(
           },
         }
       );
-      console.log(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);

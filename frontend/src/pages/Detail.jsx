@@ -13,7 +13,7 @@ const Detail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const postData = useSelector((state) => state.posts.data);
+  const postData = useSelector((state) => state.posts.current);
   const commentData = useSelector((state) => state.comments.comments.message);
   console.log(commentData);
   // 게시글 삭제 핸들러
@@ -79,6 +79,27 @@ const Detail = () => {
 
 export default Detail;
 
+const ContentsBox = styled.div`
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+`;
+
+const Content = styled.div`
+  margin: 0 20px;
+`;
+
+const DetailImg = styled.img`
+  padding: 30px;
+
+  width: 90%;
+  height: 90%;
+
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+`;
+
 const PostBdx = styled.div`
   max-width: 1000px;
   width: 100%;
@@ -110,6 +131,9 @@ const ButtonLay = styled.div`
 `;
 
 const Button = styled(ButtonBox)`
+  background-color: #ededed;
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   &:first-child {
     padding-right: 5px;
   }
@@ -119,14 +143,27 @@ const Button = styled(ButtonBox)`
 `;
 
 const StPostTitle = styled.div`
+  width: 400px;
+  height: 70px;
   font-size: 1.5rem;
   font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 30px auto 10px auto;
   text-align: center;
+  border-radius: 10px;
+  background-color: #ededed;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 `;
 
 const StPostContent = styled.div`
   font-size: 20px;
+  width: 500px;
+  margin: 20px auto;
+  border: 1px solid lightgray;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
   margin: 5px auto;
   height: 300px;
 
@@ -138,7 +175,10 @@ const StPostContent = styled.div`
 
 const StPostNickname = styled.div`
   font-size: 15px;
+  font-weight: 600;
   text-align: center;
+
+  margin: 10px auto;
 `;
 
 const StComment = styled.div`
