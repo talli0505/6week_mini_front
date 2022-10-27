@@ -60,7 +60,7 @@ const Detail = () => {
             <StPostContent>{postData?.content}</StPostContent>
           </Content>
           <Content>
-            <DetailImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnPj4jA8TYFk8aEbMCexpuvls4PYXcYyqNyQ&usqp=CAU" />
+            <DetailImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5h8iOlGEYyJ4cevBCw0IYr0GthW2zLeVWIw&usqp=CAU" />
             <ButtonLay>
               <Button onClick={() => dispatchDeletePost(id)}>
                 게시글 삭제

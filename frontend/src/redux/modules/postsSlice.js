@@ -139,6 +139,7 @@ const postsSlice = createSlice({
     },
     //게시글 delete 액션
     [__deletePostsById.fulfilled]: (state, action) => {
+      //alert 로 시간 만들어줘서
       // state.data = state.data.filter((item) => {
       //   return item.postId !== Number(action.payload);
       // });
