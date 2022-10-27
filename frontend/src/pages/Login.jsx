@@ -19,8 +19,9 @@ const Login = () => {
       email: emailRef.current.value,
       password: passwordRef.current.value,
     };
-
     dispatch(__postLogin(JSON.stringify(loginBody)));
+    alert("환영합니다");
+    navigate("/");
   };
 
   return (

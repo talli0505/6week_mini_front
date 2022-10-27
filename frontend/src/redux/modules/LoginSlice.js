@@ -38,9 +38,7 @@ const loginSlice = createSlice({
   reducers: {},
   extraReducers: {
     [__postLogin.fulfilled]: (state, action) => {
-      alert(`${action.payload.userNickname}님 환영합니다`);
       state.userinfo = action.payload.userNickname;
-      console.log(current(state));
     },
     [__postLogin.rejected]: (state, action) => {
       alert(action.payload);
