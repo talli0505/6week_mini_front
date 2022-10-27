@@ -10,8 +10,9 @@ const initialState = {
 
 const url = process.env.REACT_APP_BACK_BASE_URL;
 
+//메인페이지 전체 게시글 가져오기
 export const __getPosts = createAsyncThunk(
-  "posts/getPosts", //메인페이지 전체 게시글 가져오기
+  "posts/getPosts",
   async (payload, thunkAPI) => {
     try {
       const { data } = await axios.get(`${url}/posts`);

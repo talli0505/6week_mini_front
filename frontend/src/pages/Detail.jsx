@@ -15,7 +15,6 @@ const Detail = () => {
 
   const postData = useSelector((state) => state.posts.current);
   const commentData = useSelector((state) => state.comments.comments.message);
-  console.log(commentData);
 
   // 게시글 삭제 핸들러
 

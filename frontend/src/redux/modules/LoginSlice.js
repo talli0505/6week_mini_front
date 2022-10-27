@@ -39,9 +39,10 @@ const loginSlice = createSlice({
   extraReducers: {
     [__postLogin.fulfilled]: (state, action) => {
       state.userinfo = action.payload.userNickname;
+      alert("로그인에 성공했습니다");
     },
     [__postLogin.rejected]: (state, action) => {
-      alert(action.payload);
+      alert("가입 정보를 찾을 수 없습니다");
     },
   },
 });

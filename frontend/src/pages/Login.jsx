@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import LoginLayout from "../components/common/LoginLayout";
-
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -11,16 +10,19 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  // const globalUserInfo = useSelector((state) => state.login.userinfo);
+
   const emailRef = useRef();
   const passwordRef = useRef();
 
   const onLoginHandler = () => {
-    const loginBody = {
-      email: emailRef.current.value,
-      password: passwordRef.current.value,
-    };
-    dispatch(__postLogin(JSON.stringify(loginBody)));
-    alert("환영합니다");
+    if (window.confirm("로그인 하시겠습니까?")) {
+      const loginBody = {
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      };
+      dispatch(__postLogin(JSON.stringify(loginBody)));
+    }
     navigate("/");
   };
 

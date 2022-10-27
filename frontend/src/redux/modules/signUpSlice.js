@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const initialState = {
   isLoading: false,
@@ -31,7 +30,7 @@ const signupSlice = createSlice({
   reducers: {},
   extraReducers: {
     [__postSignup.fulfilled]: (state, action) => {
-      alert(`${action.payload.data.nickname}님 환영합니다`);
+      // alert(`${action.payload.data.nickname}님 환영합니다`);
     },
     [__postSignup.rejected]: (state, action) => {
       state.isLoading = true;

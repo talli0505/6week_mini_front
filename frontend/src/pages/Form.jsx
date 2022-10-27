@@ -54,10 +54,8 @@ const Form = () => {
 const ContentsInput = styled.input`
   width: 500px;
   height: 200px;
-
   border: 1px solid lightgray;
   border-radius: 10px;
-
   margin-bottom: 10px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 `;
@@ -65,10 +63,8 @@ const ContentsInput = styled.input`
 const TitleInput = styled.input`
   width: 500px;
   height: 50px;
-
   border: 1px solid lightgray;
   border-radius: 10px;
-
   margin-bottom: 10px;
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 `;
@@ -76,18 +72,14 @@ const TitleInput = styled.input`
 const Label = styled.div`
   width: 500px;
   text-align: start;
-
   margin-bottom: 10px;
-
   font-weight: 600;
 `;
 
 const FormButton = styled(ButtonBox)`
   border: 1px solid lightgray;
   border-radius: 5px;
-
   margin-top: 20px;
-
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 `;
 export default Form;

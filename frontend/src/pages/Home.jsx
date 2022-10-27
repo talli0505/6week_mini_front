@@ -13,8 +13,6 @@ const Home = () => {
 
   const globalPosts = useSelector((state) => state.posts.data);
 
-  console.log("포스팅 전역변수", globalPosts);
-
   return (
     <Layout>
       <PostBoxWrap>
@@ -42,7 +40,6 @@ const PostBoxWrap = styled.div`
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-
   margin: 20px auto 0 auto;
 `;
 
@@ -50,25 +47,19 @@ const PostBox = styled.div`
   width: 500px;
   height: 600px;
   cursor: pointer;
-  /* border-radius: 10px; */
-
   margin: 20px;
   padding: 20px;
   font-size: 2rem;
   text-align: center;
   text-decoration: none;
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  /* box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.7); */
 `;
 
 const PostBoxImg = styled.img`
   width: 100%;
   height: 100%;
-
   border: none;
   border-radius: 5px;
   border-radius: 20px;
