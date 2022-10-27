@@ -26,7 +26,7 @@ const Form = () => {
         content: contentRef.current.value,
       };
       dispatch(__postPosts(JSON.stringify(detailBody)));
-
+      alert("등록이 완료되었습니다 메인페이지로 이동합니다.");
       navigate("/");
     }
   };

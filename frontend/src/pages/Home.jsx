@@ -22,7 +22,7 @@ const Home = () => {
           return (
             <Link key={item.postId} to={`/detail/${item.postId}`}>
               <PostBox>
-                <PostBoxImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5h8iOlGEYyJ4cevBCw0IYr0GthW2zLeVWIw&usqp=CAU" />
+                <PostBoxImg src="https://images.velog.io/images/jjunyjjuny/post/da903d71-44fc-4f6f-92bb-b1b2d0092020/error_img.png" />
                 <ContentItem>
                   <HomeNickName>작성자 : {item.nickname} 님</HomeNickName>
                   <HomeTitle>{item.title}</HomeTitle>
@@ -47,15 +47,13 @@ const PostBoxWrap = styled.div`
 `;
 
 const PostBox = styled.div`
-  width: 400px;
-  height: 500px;
-
+  width: 500px;
+  height: 600px;
   cursor: pointer;
-  border-radius: 10px;
+  /* border-radius: 10px; */
 
   margin: 20px;
-  padding: 50px;
-
+  padding: 20px;
   font-size: 2rem;
   text-align: center;
   text-decoration: none;
@@ -64,7 +62,7 @@ const PostBox = styled.div`
   flex-direction: column;
   align-items: center;
 
-  box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.7);
+  /* box-shadow: 3px 5px 5px rgba(0, 0, 0, 0.7); */
 `;
 
 const PostBoxImg = styled.img`
@@ -73,24 +71,26 @@ const PostBoxImg = styled.img`
 
   border: none;
   border-radius: 5px;
-
-  border: 1px solid lightgray;
+  border-radius: 20px;
 `;
 
 const ContentItem = styled.div`
-  margin: 20px;
+  margin: 10px 0 20px 0;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  align-self: flex-start;
 `;
 
 const HomeNickName = styled.div`
   font-size: small;
+  text-align: start;
 `;
 const HomeTitle = styled.div`
   font-size: 1.5rem;
+  text-align: start;
 `;
 const HomeContent = styled.div`
   font-size: 1rem;
+  text-align: start;
 `;
 export default Home;

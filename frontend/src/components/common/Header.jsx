@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ButtonBox } from "./Button";
 import Button from "./Button";
 import styled from "styled-components";
-// import fork from "../../img/logo.png";
+import fork from "../../img/fork.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -30,10 +30,10 @@ const Header = () => {
     loginContents = (
       <UserInfoBlock>
         <UserInfo>{localUserNic}님 환영합니다</UserInfo>
-        <div>
+        <ButtonRaw>
           <LastButton onClick={() => navigate("/form")}>게시글작성</LastButton>
           <LastButton onClick={() => onLogout()}>로그아웃</LastButton>
-        </div>
+        </ButtonRaw>
       </UserInfoBlock>
     );
   } else {
@@ -50,12 +50,13 @@ const Header = () => {
     <HeaderBox>
       <ImgBlock>
         <LogoImg src="https://cdn-icons-png.flaticon.com/512/3209/3209879.png" />
+        <LogoImgFork src={fork} />
       </ImgBlock>
       <TitleBlock onClick={() => navigate("/")}>
         <Title>CODEFORK</Title>
         <Desc>여러분의 에러를 공유하세요</Desc>
       </TitleBlock>
-      {loginContents}
+      <InfoBlock>{loginContents}</InfoBlock>
     </HeaderBox>
   );
 };
@@ -89,6 +90,10 @@ const BottonBlock = styled(Block)`
   margin-right: 40px;
 `;
 
+const ButtonRaw = styled.div`
+  margin-right: 20px;
+`;
+
 const LastButton = styled(ButtonBox)`
   border: none;
 `;
@@ -98,15 +103,27 @@ const TitleBlock = styled(Block)`
   flex-direction: column;
 `;
 
+const InfoBlock = styled(Block)`
+  display: flex;
+  justify-content: end;
+`;
+
 const ImgBlock = styled(Block)`
+  display: flex;
+  align-items: center;
   justify-content: flex-start;
 `;
 
 const LogoImg = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
 
   margin-left: 40px;
+`;
+
+const LogoImgFork = styled.img`
+  width: 50px;
+  height: 50px;
 `;
 
 const Title = styled.div`
