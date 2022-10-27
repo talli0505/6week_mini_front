@@ -149,7 +149,7 @@ const UserInfoBlock = styled.div`
 
 const Desc = styled.div`
   font-size: 10px;
-  margin: 0;
+  margin: 0 30px 0 0;
 `;
 
 export default Header;
