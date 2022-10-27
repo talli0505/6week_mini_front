@@ -63,10 +63,8 @@ const Detail = () => {
           <Content>
             <DetailImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5h8iOlGEYyJ4cevBCw0IYr0GthW2zLeVWIw&usqp=CAU" />
             <ButtonLay>
-              <Button onClick={() => dispatchDeletePost(id)}>
-                게시글 삭제
-              </Button>
-              <Button onClick={() => navigateModify(id)}>게시글 수정</Button>
+              <Button onClick={() => dispatchDeletePost(id)}>게시글삭제</Button>
+              <Button onClick={() => navigateModify(id)}>게시글수정</Button>
             </ButtonLay>
           </Content>
         </ContentsBox>
