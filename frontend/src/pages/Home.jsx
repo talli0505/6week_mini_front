@@ -6,17 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { __getPosts } from "../redux/modules/postsSlice";
 
 const Home = () => {
-  const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(__getPosts());
   }, []);
+  const dispatch = useDispatch();
 
   const globalPosts = useSelector((state) => state.posts.data);
 
-  console.log(globalPosts);
-
-  // console.log("포스팅 전역변수", globalPosts);
+  console.log("포스팅 전역변수", globalPosts);
 
   return (
     <Layout>
@@ -51,7 +48,7 @@ const PostBoxWrap = styled.div`
 
 const PostBox = styled.div`
   width: 400px;
-  height: 600px;
+  height: 500px;
 
   cursor: pointer;
   border-radius: 10px;
@@ -74,7 +71,7 @@ const PostBoxImg = styled.img`
   width: 100%;
   height: 100%;
 
-  border: 1px solid gray;
+  border: none;
   border-radius: 5px;
 `;
 

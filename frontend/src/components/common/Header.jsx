@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "./Button";
 import { ButtonBox } from "./Button";
+import Button from "./Button";
 import styled from "styled-components";
 // import fork from "../../img/logo.png";
 
 const Header = () => {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(false);
 
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      setIsLogin(true);
-    }
-  }, []);
+  const [isLogin, setIsLogin] = useState(false);
 
   const onLogout = () => {
     if (window.confirm("로그아웃 하시겠습니까?")) {
@@ -89,9 +84,7 @@ const BottonBlock = styled(Block)`
 `;
 
 const LastButton = styled(ButtonBox)`
-  &:last-child {
-    border: none;
-  }
+  border: none;
 `;
 
 const TitleBlock = styled(Block)`
@@ -121,16 +114,14 @@ const Title = styled.div`
 
 const UserInfo = styled.div`
   font-size: 20px;
-  font-weight: 200;
-
-  margin: 0 20px 3px 0;
+  font-weight: 100;
 `;
 
-const UserInfoBlock = styled(Block)`
+const UserInfoBlock = styled.div`
   display: flex;
   flex-direction: column;
 
-  align-items: end;
+  align-items: center;
 `;
 
 const Desc = styled.div`
