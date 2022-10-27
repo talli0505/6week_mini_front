@@ -16,12 +16,14 @@ const Detail = () => {
   const postData = useSelector((state) => state.posts.current);
   const commentData = useSelector((state) => state.comments.comments.message);
   console.log(commentData);
+
   // 게시글 삭제 핸들러
 
   const dispatchDeletePost = (postId) => {
     let isDelete = window.confirm("삭제하시겠습니까?");
     if (isDelete) {
       dispatch(__deletePostsById(postId));
+      alert("삭제가 완료되었습니다. 메인으로 이동합니다.");
       navigate("/");
     }
   };

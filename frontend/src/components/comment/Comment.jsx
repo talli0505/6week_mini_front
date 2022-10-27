@@ -19,7 +19,6 @@ const Comment = ({ comment }) => {
         <StWrap>
           <StNick>{comment.nickname} </StNick>
           <StComment>{comment.comment} </StComment>
-
           <StEditBtn>
             <BsPencilSquare
               size="23"
@@ -61,7 +60,6 @@ const Comment = ({ comment }) => {
                 window.location.reload();
                 setMode("read");
               }}
-              s
             />
           </StUpBtn>
           <StDelBtn>
@@ -93,7 +91,6 @@ const StNick = styled.div`
   line-height: 70px;
   margin: 0 0 0 17px;
   word-break: break-all;
-  //border: 1px solid gray;
 `;
 const StComment = styled.div`
   width: 800px;
@@ -102,7 +99,6 @@ const StComment = styled.div`
   line-height: 70px;
   margin: 0 0 0 25px;
   word-break: break-all;
-  //border: 1px solid gray;
 `;
 const StEditBtn = styled.div`
   display: flex;

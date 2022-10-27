@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 //initialState
@@ -12,8 +12,6 @@ const initialState = {
 
 const url = process.env.REACT_APP_BACK_BASE_URL;
 
-// {data} 구조분해할당 fulfillwithvalue(data) 데이터값만 보여줌!
-// data , fulfillwithvalue(data.data) data.data 안해주면 config등 쓸데없는거 가져옴
 export const __getComments = createAsyncThunk(
   "getComments", //전체댓글 가져오기
   async (payload, thunkAPI) => {
@@ -47,7 +45,6 @@ export const __postComment = createAsyncThunk(
           },
         }
       );
-      console.log(data);
       return thunkAPI.fulfillWithValue(data.createcomments.create);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -66,7 +63,6 @@ export const __delComment = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(payload);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error.code);
@@ -127,8 +123,6 @@ export const commentsSlice = createSlice({
     },
     [__delComment.fulfilled]: (state, action) => {
       state.comments.message = state.comments.message.filter((item) => {
-        console.log(current(item));
-        console.log(action.payload);
         return item.commentId !== action.payload;
       });
       state.isLoading = false;

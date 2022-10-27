@@ -73,6 +73,8 @@ const PostBoxImg = styled.img`
 
   border: none;
   border-radius: 5px;
+
+  border: 1px solid lightgray;
 `;
 
 const ContentItem = styled.div`

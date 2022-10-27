@@ -25,7 +25,7 @@ const Modify = () => {
       content: contentRef.current.value,
     };
     dispatch(__putPostsById({ ...patchContentBody, postId: postId }));
-
+    alert("수정이 완료되었습니다. 메인으로 이동합니다.");
     navigate("/");
   };
   return (

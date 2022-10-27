@@ -5,6 +5,7 @@ import { __postSignup } from "../redux/modules/signUpSlice";
 import { LockClosedIcon } from "@heroicons/react/20/solid";
 import Layout from "../components/common/Layout";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -30,11 +31,10 @@ const SignUp = () => {
     } else if (confirmRef.current.value == "") {
       alert("비밀번호를 한번 더 입력해 주세요");
     } else if (
-      nicknameRef.current.value.length < 3 ||
-      checkNic.test(nicknameRef.current.value) ||
-      eng.test(nicknameRef.current.value)
+      nicknameRef.current.value.length > 3 &&
+      checkNic.test(nicknameRef.current.value)
     ) {
-      alert("닉네임은 영여로, `최소 3자 이상, 특수 문자를 포함하면 안됩니다`");
+      alert("닉네임은 영어로, `최소 3자 이상, 특수 문자를 포함하면 안됩니다`");
     } else if (!checkEmail.test(emailRef.current.value)) {
       alert("이메일 형식이 올바르지 않습니다.");
     } else if (!checkPwd.test(passwordRef.current.value)) {
@@ -70,8 +70,8 @@ const SignUp = () => {
                 ref={nicknameRef}
                 type="text"
                 required
-                className="my-2 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                placeholder="닉네임을 입력해주세요"
+                className="my-2 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                placeholder="nickname"
               />
             </div>
             <div>
@@ -80,8 +80,8 @@ const SignUp = () => {
                 ref={emailRef}
                 type="email"
                 required
-                className="my-2 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                placeholder="이메일을 입력해 주세요"
+                className="my-2 relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                placeholder="email"
               />
             </div>
             <div>
@@ -90,8 +90,8 @@ const SignUp = () => {
                 ref={passwordRef}
                 type="password"
                 required
-                className="my-2 relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                placeholder="비밀번호를 입력해 주세요"
+                className="my-2 relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                placeholder="password"
               />
             </div>
             <div>
@@ -100,8 +100,8 @@ const SignUp = () => {
                 ref={confirmRef}
                 type="password"
                 required
-                className="my-2 relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-                placeholder="비밀번호 재입력"
+                className="my-2 relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-400 focus:z-10 focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+                placeholder="Re-enter password"
               />
             </div>
           </div>
@@ -110,7 +110,7 @@ const SignUp = () => {
             <div className="text-sm">
               <a
                 href="/"
-                className="font-medium text-gray-300 w-4hover:text-gray-500"
+                className="my-0 font-medium text-gray-300 w-4hover:text-gray-500"
               >
                 메인페이지로 돌아가기
               </a>

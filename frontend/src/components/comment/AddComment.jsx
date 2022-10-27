@@ -19,7 +19,6 @@ const AddComment = () => {
         __postComment({ comment: commentRef.current.value, id: param.id })
       );
     }
-    //window.location.reload();
     commentRef.current.value = "";
   };
 
